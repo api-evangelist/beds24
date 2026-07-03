@@ -1,0 +1,107 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Beds24
+providerId: beds24
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Vacation Rental
+- Channel Manager
+- Property Management System
+- Hospitality
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Beds24 spend. Beds24 bills on a pay-as-you-go, per-rental basis:
+  a monthly base fee for a single rental, incremental per-property and per-rental
+  fees, a per-link monthly fee for each channel manager connection, and an
+  optional monthly fee for the private-label booking engine. The REST API is
+  included with a paid account at no separate charge, so the direct cost driver
+  of API usage is the underlying platform subscription (number of rentals and
+  channel links) rather than per-call fees. The main operational constraint on
+  API consumption is the account-level 5-minute credit limit, not a metered
+  invoice line.
+notes: >-
+  Because there is no per-API-call charge, API cost optimization at Beds24 is
+  about (1) right-sizing the number of active rentals and channel links you pay
+  for monthly, and (2) staying within the credit limit to avoid throttling.
+  Figures are indicative; reconcile against the Beds24 pricing calculator and a
+  live invoice.
+sources:
+- https://beds24.com/pricing.html
+- https://beds24.com/developer-api.html
+- https://wiki.beds24.com/index.php/Category:API_V2
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Beds24
+serviceCategory: Hospitality and Property Management
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly
+  billingCurrency: EUR
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Beds24 Channel Manager and PMS
+  ServiceCategory: Hospitality and Property Management
+  ProviderName: Beds24
+  PublisherName: Beds24
+  InvoiceIssuerName: Beds24
+  BillingCurrency: EUR
+  ChargeCategory: Usage
+  PricingCategory: Subscription
+meters:
+- name: base_property
+  description: Monthly base fee for a single-rental property.
+  unit: property
+  aggregation: sum
+  dimensions:
+  - account
+- name: rentals
+  description: Number of billable rentals / units across the portfolio, billed monthly.
+  unit: rental
+  aggregation: sum
+  dimensions:
+  - account
+  - property
+- name: channel_links
+  description: Number of channel manager links (room type to OTA channel), billed monthly.
+  unit: link
+  aggregation: sum
+  dimensions:
+  - account
+  - property
+  - channel
+- name: booking_engine
+  description: Optional monthly fee for the private-label online booking engine.
+  unit: account
+  aggregation: sum
+  dimensions:
+  - account
+- name: api_credits
+  description: Account-level API credits consumed per 5-minute window (an operational limit, not a billed meter).
+  unit: credits
+  aggregation: max
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track the number of billable rentals and channel links per account and property, and monitor API credit consumption via the x-request-cost and x-five-min-limit-remaining headers.
+- name: Allocation
+  description: Map rentals and channel links to properties and owners so the monthly platform fee can be allocated to the right cost center or property owner.
+- name: Optimization
+  description: Deactivate unused rentals and channel links, batch and cache bulk calendar/price reads to stay within the credit limit, and avoid redundant polling.
+- name: Accountability
+  description: Assign an owner per property/account, review the monthly Beds24 invoice against active rentals and links, and alert when API usage approaches the credit limit.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

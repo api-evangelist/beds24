@@ -1,0 +1,824 @@
+openapi: 3.0.3
+info:
+  title: Beds24 API V2
+  description: >-
+    The Beds24 API V2 lets you read, create, and alter data across almost all
+    aspects of a Beds24 account, including properties, room inventory, bookings,
+    prices, invoices, channels, and account settings. Beds24 is a vacation rental
+    and hotel channel manager, property management system, and booking engine.
+
+    Base URL is https://api.beds24.com/v2. Authentication uses expiring access
+    tokens that are generated from a refresh token (or a read-only long-life
+    token) obtained via the /authentication endpoints; the token is sent in the
+    "token" request header. Every category except /authentication requires a
+    matching scope. Usage is governed by an account-level credit limit over a
+    rolling 5-minute window, reported via the x-five-min-limit-remaining,
+    x-five-min-limit-resets-in, and x-request-cost response headers.
+
+    This document models the public V2 surface from Beds24's Swagger UI
+    (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are
+    grounded in the published documentation but were not byte-verified against the
+    live Swagger JSON, which requires an authenticated token to retrieve.
+  version: '2.0'
+  contact:
+    name: Beds24
+    url: https://beds24.com
+  license:
+    name: Proprietary
+    url: https://beds24.com/terms.html
+servers:
+  - url: https://api.beds24.com/v2
+    description: Beds24 API V2 production
+security:
+  - tokenAuth: []
+tags:
+  - name: Authentication
+    description: Refresh and access token management and diagnostics.
+  - name: Bookings
+    description: Read, create, and modify reservations across all channels.
+  - name: Invoices
+    description: Invoice items, charges, and payments attached to bookings.
+  - name: Messages
+    description: Guest and channel messages attached to bookings.
+  - name: Properties
+    description: Property and room configuration and bookable offers.
+  - name: Inventory
+    description: Per-day availability calendar, availability status, and fixed prices.
+  - name: Channels
+    description: OTA channel connection and mapping management.
+  - name: Accounts
+    description: Account-level information, sub-accounts, and users.
+paths:
+  /authentication/setup:
+    get:
+      operationId: getSetup
+      tags: [Authentication]
+      summary: Get a refresh token from an invite code
+      description: >-
+        Exchanges an invite code (created in SETTINGS > ACCOUNT > ACCESS) for a
+        refresh token and an initial access token, with the requested scopes.
+      parameters:
+        - name: code
+          in: header
+          required: true
+          schema: { type: string }
+          description: The invite code generated in the Beds24 control panel.
+        - name: deviceName
+          in: header
+          required: false
+          schema: { type: string }
+      responses:
+        '200':
+          description: A refresh token and access token.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TokenSetup' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /authentication/token:
+    get:
+      operationId: getToken
+      tags: [Authentication]
+      summary: Get an access token from a refresh token
+      description: Generates a short-lived access token from a long-life refresh token.
+      parameters:
+        - name: refreshToken
+          in: header
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: A new access token and its expiry.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Token' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteToken
+      tags: [Authentication]
+      summary: Revoke the current token
+      description: Invalidates the refresh token used to authenticate this request.
+      responses:
+        '200':
+          description: Token revoked.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /authentication/details:
+    get:
+      operationId: getAuthenticationDetails
+      tags: [Authentication]
+      summary: Get token diagnostics
+      description: Returns diagnostics about the current token, including scopes and validity.
+      responses:
+        '200':
+          description: Token diagnostics.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthenticationDetails' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /bookings:
+    get:
+      operationId: getBookings
+      tags: [Bookings]
+      summary: Get bookings
+      description: >-
+        Returns bookings matching the supplied filters. Filter by property, room,
+        arrival/departure window, status, and modification time. Supports paging.
+      parameters:
+        - { name: propertyId, in: query, schema: { type: integer }, description: Filter to a property. }
+        - { name: roomId, in: query, schema: { type: integer } }
+        - { name: arrivalFrom, in: query, schema: { type: string, format: date } }
+        - { name: arrivalTo, in: query, schema: { type: string, format: date } }
+        - { name: departureFrom, in: query, schema: { type: string, format: date } }
+        - { name: departureTo, in: query, schema: { type: string, format: date } }
+        - { name: status, in: query, schema: { type: string, enum: [new, request, confirmed, cancelled, black, inquiry] } }
+        - { name: modifiedFrom, in: query, schema: { type: string, format: date-time } }
+        - { name: includeInvoiceItems, in: query, schema: { type: boolean } }
+        - { name: includeInfoItems, in: query, schema: { type: boolean } }
+        - { name: page, in: query, schema: { type: integer, default: 1 } }
+      responses:
+        '200':
+          description: A page of bookings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  type: { type: string }
+                  count: { type: integer }
+                  pages: { type: integer }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Booking' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      operationId: postBookings
+      tags: [Bookings]
+      summary: Create or modify bookings
+      description: >-
+        Creates new bookings or modifies existing ones (when an id is supplied).
+        Accepts an array so multiple bookings can be written in one request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/BookingWrite' }
+      responses:
+        '200':
+          description: Write results per booking.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/BookingWriteResult' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /bookings/messages:
+    get:
+      operationId: getBookingMessages
+      tags: [Messages]
+      summary: Get booking messages
+      description: Returns guest and channel messages for the specified bookings.
+      parameters:
+        - { name: bookingId, in: query, schema: { type: integer } }
+        - { name: maxAge, in: query, schema: { type: integer }, description: Only messages newer than N seconds. }
+      responses:
+        '200':
+          description: A list of messages.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Message' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postBookingMessages
+      tags: [Messages]
+      summary: Post booking messages
+      description: Posts a guest or channel message to one or more bookings.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/MessageWrite' }
+      responses:
+        '200':
+          description: Message write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /bookings/invoiceitems:
+    get:
+      operationId: getInvoiceItems
+      tags: [Invoices]
+      summary: Get invoice items
+      description: >-
+        Returns invoice items, charges, and payments attached to bookings.
+        Modeled - in the live V2 API invoice items are also returnable inline on
+        the bookings resource via includeInvoiceItems.
+      parameters:
+        - { name: bookingId, in: query, schema: { type: integer } }
+      responses:
+        '200':
+          description: A list of invoice items.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/InvoiceItem' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postInvoiceItems
+      tags: [Invoices]
+      summary: Create or modify invoice items
+      description: Writes invoice items (charges and payments) onto bookings. Modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/InvoiceItem' }
+      responses:
+        '200':
+          description: Invoice item write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /properties:
+    get:
+      operationId: getProperties
+      tags: [Properties]
+      summary: Get properties
+      description: Returns properties and their rooms matching the supplied criteria.
+      parameters:
+        - { name: id, in: query, schema: { type: array, items: { type: integer } }, style: form, explode: true, description: Filter to one or more property ids. }
+        - { name: includeAllRooms, in: query, schema: { type: boolean } }
+        - { name: includeTexts, in: query, schema: { type: boolean } }
+        - { name: includePriceRules, in: query, schema: { type: boolean } }
+      responses:
+        '200':
+          description: A list of properties.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Property' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postProperties
+      tags: [Properties]
+      summary: Create or modify properties
+      description: Creates or updates properties and rooms. Modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/Property' }
+      responses:
+        '200':
+          description: Property write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /properties/offers:
+    get:
+      operationId: getPropertyOffers
+      tags: [Properties]
+      summary: Get bookable offers
+      description: >-
+        Returns bookable offers (available room/rate combinations) for a property
+        over a date range, as used by a booking engine.
+      parameters:
+        - { name: propertyId, in: query, required: true, schema: { type: integer } }
+        - { name: arrival, in: query, required: true, schema: { type: string, format: date } }
+        - { name: departure, in: query, required: true, schema: { type: string, format: date } }
+        - { name: numAdult, in: query, schema: { type: integer } }
+        - { name: numChild, in: query, schema: { type: integer } }
+      responses:
+        '200':
+          description: A list of bookable offers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Offer' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /inventory/rooms/calendar:
+    get:
+      operationId: getRoomCalendar
+      tags: [Inventory]
+      summary: Get per-day price and availability
+      description: >-
+        Retrieves per-day price and availability for rooms in bulk (for example a
+        year at a time) suitable for caching locally. Returns number of units
+        available, min/max stay, prices, and open/close status per date.
+      parameters:
+        - { name: roomId, in: query, schema: { type: array, items: { type: integer } }, style: form, explode: true }
+        - { name: startDate, in: query, required: true, schema: { type: string, format: date } }
+        - { name: endDate, in: query, required: true, schema: { type: string, format: date } }
+        - { name: includePrices, in: query, schema: { type: boolean } }
+        - { name: includeNumAvail, in: query, schema: { type: boolean } }
+        - { name: includeMinStay, in: query, schema: { type: boolean } }
+      responses:
+        '200':
+          description: Per-day calendar entries.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/CalendarDay' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      operationId: postRoomCalendar
+      tags: [Inventory]
+      summary: Update per-day price and availability
+      description: >-
+        Updates prices and availability per room and date range - number of units
+        available, min/max stay, and open/close status - which propagates to
+        connected channels.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/CalendarWrite' }
+      responses:
+        '200':
+          description: Calendar write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /inventory/rooms/availability:
+    get:
+      operationId: getRoomAvailability
+      tags: [Inventory]
+      summary: Get availability status of dates
+      description: Returns whether dates are available or not for the specified rooms.
+      parameters:
+        - { name: roomId, in: query, schema: { type: array, items: { type: integer } }, style: form, explode: true }
+        - { name: startDate, in: query, required: true, schema: { type: string, format: date } }
+        - { name: endDate, in: query, required: true, schema: { type: string, format: date } }
+      responses:
+        '200':
+          description: Availability status per date.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/AvailabilityDay' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postRoomAvailability
+      tags: [Inventory]
+      summary: Update availability of dates
+      description: Sets availability (open/close and number of units) for rooms and dates. Modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/AvailabilityDay' }
+      responses:
+        '200':
+          description: Availability write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /inventory/fixedPrices:
+    get:
+      operationId: getFixedPrices
+      tags: [Inventory]
+      summary: Get fixed prices
+      description: Returns the fixed price rules and rate plans configured for rooms.
+      parameters:
+        - { name: propertyId, in: query, schema: { type: integer } }
+        - { name: roomId, in: query, schema: { type: integer } }
+      responses:
+        '200':
+          description: A list of fixed prices.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/FixedPrice' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postFixedPrices
+      tags: [Inventory]
+      summary: Create or modify fixed prices
+      description: Creates or updates fixed price rules and rate plans.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/FixedPrice' }
+      responses:
+        '200':
+          description: Fixed price write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteFixedPrices
+      tags: [Inventory]
+      summary: Delete fixed prices
+      description: Deletes fixed price rules by id. Modeled.
+      parameters:
+        - { name: id, in: query, required: true, schema: { type: integer } }
+      responses:
+        '200':
+          description: Delete result.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /channels:
+    get:
+      operationId: getChannels
+      tags: [Channels]
+      summary: Get channel connections
+      description: >-
+        Returns the OTA channel connections and their room/rate mappings for the
+        account (Booking.com, Airbnb, Expedia, Vrbo, and others). Modeled.
+      parameters:
+        - { name: propertyId, in: query, schema: { type: integer } }
+      responses:
+        '200':
+          description: A list of channel connections.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Channel' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postChannels
+      tags: [Channels]
+      summary: Update channel mappings
+      description: Updates channel connection settings and room/rate mappings. Modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items: { $ref: '#/components/schemas/Channel' }
+      responses:
+        '200':
+          description: Channel write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Success' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /accounts:
+    get:
+      operationId: getAccounts
+      tags: [Accounts]
+      summary: Get account information
+      description: >-
+        Returns account-level information, including sub-accounts and users, that
+        scopes every other API category. Modeled.
+      responses:
+        '200':
+          description: Account information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Account' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: >-
+        Short-lived access token generated from a refresh token via the
+        /authentication endpoints, sent in the "token" request header.
+  responses:
+    Unauthorized:
+      description: The token is missing, invalid, expired, or lacks the required scope.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    TooManyRequests:
+      description: >-
+        The account credit limit for the current rolling 5-minute window has been
+        exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.
+      headers:
+        x-five-min-limit-remaining:
+          schema: { type: integer }
+          description: Credits remaining in the current 5-minute period.
+        x-five-min-limit-resets-in:
+          schema: { type: integer }
+          description: Seconds until the current period resets.
+        x-request-cost:
+          schema: { type: integer }
+          description: Credits this request cost.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+  schemas:
+    Success:
+      type: object
+      properties:
+        success: { type: boolean }
+        new: { type: object, additionalProperties: true }
+        modified: { type: object, additionalProperties: true }
+        warnings: { type: array, items: { type: string } }
+    Error:
+      type: object
+      properties:
+        success: { type: boolean, example: false }
+        code: { type: integer, example: 401 }
+        error: { type: string, example: Token is missing }
+    TokenSetup:
+      type: object
+      properties:
+        token: { type: string }
+        expiresIn: { type: integer }
+        refreshToken: { type: string }
+    Token:
+      type: object
+      properties:
+        token: { type: string }
+        expiresIn: { type: integer }
+    AuthenticationDetails:
+      type: object
+      properties:
+        validToken: { type: boolean }
+        token:
+          type: object
+          properties:
+            expiresIn: { type: integer }
+        scopes: { type: array, items: { type: string } }
+    Booking:
+      type: object
+      properties:
+        id: { type: integer }
+        propertyId: { type: integer }
+        roomId: { type: integer }
+        unitId: { type: integer }
+        status: { type: string }
+        arrival: { type: string, format: date }
+        departure: { type: string, format: date }
+        numAdult: { type: integer }
+        numChild: { type: integer }
+        firstName: { type: string }
+        lastName: { type: string }
+        email: { type: string }
+        price: { type: number }
+        referer: { type: string }
+        apiSource: { type: string }
+        bookingTime: { type: string, format: date-time }
+        modifiedTime: { type: string, format: date-time }
+        invoiceItems:
+          type: array
+          items: { $ref: '#/components/schemas/InvoiceItem' }
+        infoItems:
+          type: array
+          items: { type: object, additionalProperties: true }
+    BookingWrite:
+      type: object
+      properties:
+        id: { type: integer, description: Supply to modify an existing booking; omit to create. }
+        roomId: { type: integer }
+        status: { type: string }
+        arrival: { type: string, format: date }
+        departure: { type: string, format: date }
+        firstName: { type: string }
+        lastName: { type: string }
+        email: { type: string }
+        numAdult: { type: integer }
+        invoiceItems:
+          type: array
+          items: { $ref: '#/components/schemas/InvoiceItem' }
+    BookingWriteResult:
+      type: object
+      properties:
+        success: { type: boolean }
+        id: { type: integer }
+        warnings: { type: array, items: { type: string } }
+    InvoiceItem:
+      type: object
+      properties:
+        id: { type: integer }
+        bookingId: { type: integer }
+        type: { type: string, enum: [charge, payment] }
+        description: { type: string }
+        qty: { type: number }
+        amount: { type: number }
+        vatRate: { type: number }
+        lineTotal: { type: number }
+    Message:
+      type: object
+      properties:
+        id: { type: integer }
+        bookingId: { type: integer }
+        source: { type: string }
+        read: { type: boolean }
+        time: { type: string, format: date-time }
+        message: { type: string }
+    MessageWrite:
+      type: object
+      properties:
+        bookingId: { type: integer }
+        message: { type: string }
+    Property:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        propertyType: { type: string }
+        currency: { type: string }
+        address: { type: string }
+        city: { type: string }
+        country: { type: string }
+        roomTypes:
+          type: array
+          items: { $ref: '#/components/schemas/Room' }
+    Room:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        qty: { type: integer }
+        maxPeople: { type: integer }
+        minStay: { type: integer }
+    Offer:
+      type: object
+      properties:
+        roomId: { type: integer }
+        name: { type: string }
+        price: { type: number }
+        available: { type: integer }
+        arrival: { type: string, format: date }
+        departure: { type: string, format: date }
+    CalendarDay:
+      type: object
+      properties:
+        roomId: { type: integer }
+        date: { type: string, format: date }
+        numAvail: { type: integer }
+        price1: { type: number }
+        minStay: { type: integer }
+        maxStay: { type: integer }
+        override: { type: string }
+    CalendarWrite:
+      type: object
+      properties:
+        roomId: { type: integer }
+        calendar:
+          type: array
+          items:
+            type: object
+            properties:
+              from: { type: string, format: date }
+              to: { type: string, format: date }
+              numAvail: { type: integer }
+              price1: { type: number }
+              minStay: { type: integer }
+    AvailabilityDay:
+      type: object
+      properties:
+        roomId: { type: integer }
+        date: { type: string, format: date }
+        available: { type: boolean }
+        numAvail: { type: integer }
+    FixedPrice:
+      type: object
+      properties:
+        id: { type: integer }
+        propertyId: { type: integer }
+        roomId: { type: integer }
+        name: { type: string }
+        firstNight: { type: string, format: date }
+        lastNight: { type: string, format: date }
+        minNights: { type: integer }
+        maxNights: { type: integer }
+        roomPrice: { type: number }
+    Channel:
+      type: object
+      properties:
+        id: { type: integer }
+        propertyId: { type: integer }
+        channel: { type: string, description: OTA identifier, e.g. bookingcom, airbnb, expedia. }
+        connected: { type: boolean }
+        mappings:
+          type: array
+          items:
+            type: object
+            properties:
+              roomId: { type: integer }
+              externalRoomId: { type: string }
+              externalRateId: { type: string }
+    Account:
+      type: object
+      properties:
+        id: { type: integer }
+        username: { type: string }
+        name: { type: string }
+        role: { type: string }
+        subAccounts:
+          type: array
+          items: { type: object, additionalProperties: true }

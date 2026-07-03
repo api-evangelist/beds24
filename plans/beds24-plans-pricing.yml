@@ -1,0 +1,164 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Beds24
+providerId: beds24
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Vacation Rental
+- Hotel
+- Channel Manager
+- Property Management System
+- Booking Engine
+- Plans
+description: >-
+  Beds24 uses a pay-as-you-go, per-rental pricing model rather than fixed tiers.
+  There is a small monthly base fee for a single-rental property, incremental
+  per-property and per-rental fees for larger portfolios, a small per-link
+  monthly fee for each channel manager connection, and an optional monthly fee
+  for a private-label online booking engine. There is a free trial. The REST API
+  (v2 and legacy v1) is included with any paid account at no additional charge -
+  API access is enabled per account in SETTINGS > ACCOUNT > ACCESS. Prices below
+  are indicative figures published on beds24.com/pricing.html and are billed in
+  EUR; verify current rates with the Beds24 pricing calculator.
+notes: >-
+  The API is not sold as a separate product or tier - it is a capability of the
+  Beds24 platform available to paying accounts, governed by an account-level
+  credit-based rate limit (see rate-limits/beds24-rate-limits.yml). Figures are
+  indicative and were not reconciled against a live quote.
+sources:
+- https://beds24.com/pricing.html
+- https://beds24.com/developer-api.html
+- https://wiki.beds24.com/index.php/Category:API_V2
+plans:
+- id: beds24-trial
+  name: Free Trial
+  type: free
+  description: >-
+    Time-limited free trial of the full Beds24 platform, including API access,
+    to evaluate the channel manager, PMS, and booking engine.
+  entries:
+  - label: Trial Period
+    name: trial
+    type: free
+    metric: days
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free during trial period
+    userMultiplied: false
+  elements:
+  - name: Channel Manager
+  - name: Property Management System
+  - name: Online Booking Engine
+  - name: API V2 Access
+- id: beds24-base-property
+  name: Base Property Fee
+  type: paid
+  description: >-
+    Recurring monthly fee for a Beds24 account with a single rental, including
+    PMS, calendar, and API access. Additional properties and rentals are billed
+    incrementally on top of this base.
+  entries:
+  - label: Base Property (one rental)
+    name: base_property
+    type: recurring
+    metric: property
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: from EUR 15.90 / month
+    userMultiplied: false
+  - label: Additional Property
+    name: additional_property
+    type: recurring
+    metric: property
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: EUR 3.00 / property / month
+    userMultiplied: true
+  - label: Additional Rental / Unit
+    name: additional_rental
+    type: recurring
+    metric: rental
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: EUR 1.00 / rental / month
+    userMultiplied: true
+  elements:
+  - name: Property Management System
+  - name: Availability Calendar
+  - name: API V2 Access
+- id: beds24-channel-manager
+  name: Channel Manager Connections
+  type: usage
+  description: >-
+    Per-link monthly fee for each channel manager connection, where one link is
+    one room type or category connected to one OTA channel (Booking.com, Airbnb,
+    Expedia, Vrbo, and others). Keeps external listings in sync via the Channels
+    surface of the API.
+  entries:
+  - label: Channel Link
+    name: channel_link
+    type: recurring
+    metric: link
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: EUR 0.55 / link / month
+    userMultiplied: true
+  elements:
+  - name: OTA Synchronization
+  - name: Rate and Availability Push
+- id: beds24-booking-engine
+  name: Online Booking Engine (Private Label)
+  type: paid
+  description: >-
+    Optional monthly fee for a private-label online booking engine on your own
+    subdomain, driven by the properties, offers, and prices exposed via the API.
+  entries:
+  - label: Private Label Booking Page
+    name: booking_engine
+    type: recurring
+    metric: account
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: from EUR 19.00 / month
+    userMultiplied: false
+  elements:
+  - name: Booking Engine
+  - name: Custom Subdomain
+- id: beds24-custom
+  name: Custom / Portfolio Quote
+  type: enterprise
+  description: >-
+    Custom quote for large or complex portfolios with multiple property types.
+    Contact Beds24 for a tailored price.
+  entries:
+  - label: Custom Agreement
+    name: custom
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact Beds24
+    userMultiplied: false
+  elements:
+  - name: Portfolio Pricing
+  - name: Custom Setup
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

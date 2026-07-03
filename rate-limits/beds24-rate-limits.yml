@@ -1,0 +1,83 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Beds24
+providerId: beds24
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Vacation Rental
+- Channel Manager
+- Hospitality
+- Rate Limiting
+- Credits
+- Quotas
+description: >-
+  Beds24 API V2 enforces a credit-based rate limit at the account level over a
+  rolling 5-minute window. Each request consumes a number of credits (its
+  request cost), and heavier requests cost more credits than lighter ones. The
+  default allowance is 100 credits per 5-minute period. Tokens issued under the
+  same account share the same credit pool; different accounts, including
+  sub-accounts, have separate pools. Every response reports the current state via
+  the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost
+  headers. Beds24 also advises spacing calls a few seconds apart and keeping API
+  usage to the minimum required for reasonable business use; the legacy v1 API
+  warns that excessive usage within a 5-minute period can cause the account to be
+  blocked without warning.
+notes: >-
+  The 100-credit default and per-request credit cost can vary by endpoint and by
+  account; inspect the response headers at runtime rather than assuming a fixed
+  per-endpoint number. Retrieve bulk data (for example a year of calendar) in one
+  call and cache it locally to conserve credits.
+sources:
+- https://wiki.beds24.com/index.php/Category:API_V2
+- https://beds24.com/developer-api.html
+- https://beds24.com/api/
+responseCodes:
+  throttled: 429
+limits:
+- name: Account Credit Limit
+  scope: account
+  metric: credits
+  limit: 100 credits / 5 minutes (default)
+  notes: >-
+    Default allowance per rolling 5-minute window, shared across all tokens under
+    the account. Reported by x-five-min-limit-remaining and reset by
+    x-five-min-limit-resets-in.
+- name: Per-Request Cost
+  scope: request
+  metric: credits
+  limit: variable per endpoint
+  notes: >-
+    Each request deducts credits from the account pool; the amount is returned in
+    the x-request-cost response header. Heavier reads/writes cost more.
+- name: Sub-Account Pools
+  scope: account
+  metric: credits
+  limit: separate per account
+  notes: Sub-accounts and separate accounts each get their own independent credit pool.
+- name: Legacy v1 Usage
+  scope: account
+  metric: requests
+  limit: not published (guarded)
+  notes: >-
+    The legacy JSON/XML v1 API does not publish a numeric limit but warns that
+    excessive usage within a 5-minute period may block the account without warning.
+headers:
+- name: x-five-min-limit-remaining
+  description: Number of credits remaining for the current 5-minute period.
+- name: x-five-min-limit-resets-in
+  description: Number of seconds until the current 5-minute period resets.
+- name: x-request-cost
+  description: Number of credits the current request cost.
+policies:
+- name: Space Out Calls
+  description: Beds24 recommends spacing API calls a few seconds apart and keeping usage to the minimum required for reasonable business use.
+- name: Cache Bulk Data
+  description: Retrieve availability and pricing in bulk (for example a year at a time via the inventory calendar) and cache it locally to reduce credit consumption.
+- name: Backoff on 429
+  description: On a 429 response, wait for x-five-min-limit-resets-in seconds before retrying and implement exponential backoff with jitter.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

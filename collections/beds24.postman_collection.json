@@ -1,0 +1,259 @@
+{
+  "info": {
+    "name": "Beds24 API V2",
+    "description": "Read, create, and alter data across a Beds24 vacation rental and hotel account - properties, room inventory, bookings, prices, invoices, channels, and account settings. Base URL: https://api.beds24.com/v2. Authentication uses a short-lived access token (generated from a refresh token via the /authentication endpoints) sent in the 'token' request header. Usage is governed by an account-level credit limit over a rolling 5-minute window (x-five-min-limit-remaining / x-request-cost).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "token", "type": "string" },
+      { "key": "value", "value": "{{accessToken}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.beds24.com/v2", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" },
+    { "key": "refreshToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Get refresh token from invite code",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "code", "value": "{{inviteCode}}" }],
+            "url": { "raw": "{{baseUrl}}/authentication/setup", "host": ["{{baseUrl}}"], "path": ["authentication", "setup"] },
+            "description": "Exchanges an invite code for a refresh token and an initial access token."
+          }
+        },
+        {
+          "name": "Get access token from refresh token",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "refreshToken", "value": "{{refreshToken}}" }],
+            "url": { "raw": "{{baseUrl}}/authentication/token", "host": ["{{baseUrl}}"], "path": ["authentication", "token"] },
+            "description": "Generates a short-lived access token from a refresh token."
+          }
+        },
+        {
+          "name": "Get token details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/authentication/details", "host": ["{{baseUrl}}"], "path": ["authentication", "details"] },
+            "description": "Returns diagnostics about the current token, including scopes and validity."
+          }
+        },
+        {
+          "name": "Revoke token",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/authentication/token", "host": ["{{baseUrl}}"], "path": ["authentication", "token"] },
+            "description": "Invalidates the refresh token used to authenticate this request."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Get bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bookings?propertyId=&status=&arrivalFrom=&arrivalTo=&includeInvoiceItems=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"],
+              "query": [
+                { "key": "propertyId", "value": "" },
+                { "key": "status", "value": "" },
+                { "key": "arrivalFrom", "value": "" },
+                { "key": "arrivalTo", "value": "" },
+                { "key": "includeInvoiceItems", "value": "true" }
+              ]
+            },
+            "description": "Returns bookings matching the supplied filters across all connected channels."
+          }
+        },
+        {
+          "name": "Create or modify bookings",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[\n  {\n    \"roomId\": 0,\n    \"status\": \"confirmed\",\n    \"arrival\": \"2026-08-01\",\n    \"departure\": \"2026-08-05\",\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Doe\",\n    \"email\": \"jane@example.com\",\n    \"numAdult\": 2\n  }\n]" },
+            "url": { "raw": "{{baseUrl}}/bookings", "host": ["{{baseUrl}}"], "path": ["bookings"] },
+            "description": "Creates new bookings or modifies existing ones when an id is supplied."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "Get invoice items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/bookings/invoiceitems?bookingId=", "host": ["{{baseUrl}}"], "path": ["bookings", "invoiceitems"], "query": [{ "key": "bookingId", "value": "" }] },
+            "description": "Returns invoice items, charges, and payments attached to bookings (modeled)."
+          }
+        },
+        {
+          "name": "Create or modify invoice items",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[\n  {\n    \"bookingId\": 0,\n    \"type\": \"charge\",\n    \"description\": \"Cleaning fee\",\n    \"qty\": 1,\n    \"amount\": 50.0,\n    \"vatRate\": 20\n  }\n]" },
+            "url": { "raw": "{{baseUrl}}/bookings/invoiceitems", "host": ["{{baseUrl}}"], "path": ["bookings", "invoiceitems"] },
+            "description": "Writes invoice items (charges and payments) onto bookings (modeled)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "Get booking messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/bookings/messages?bookingId=", "host": ["{{baseUrl}}"], "path": ["bookings", "messages"], "query": [{ "key": "bookingId", "value": "" }] },
+            "description": "Returns guest and channel messages for the specified bookings."
+          }
+        },
+        {
+          "name": "Post booking message",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[\n  {\n    \"bookingId\": 0,\n    \"message\": \"Thanks for your booking, check-in is from 3pm.\"\n  }\n]" },
+            "url": { "raw": "{{baseUrl}}/bookings/messages", "host": ["{{baseUrl}}"], "path": ["bookings", "messages"] },
+            "description": "Posts a guest or channel message to one or more bookings."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Properties",
+      "item": [
+        {
+          "name": "Get properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/properties?includeAllRooms=true&includeTexts=true", "host": ["{{baseUrl}}"], "path": ["properties"], "query": [{ "key": "includeAllRooms", "value": "true" }, { "key": "includeTexts", "value": "true" }] },
+            "description": "Returns properties and their rooms matching the supplied criteria."
+          }
+        },
+        {
+          "name": "Get bookable offers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/properties/offers?propertyId=&arrival=2026-08-01&departure=2026-08-05&numAdult=2", "host": ["{{baseUrl}}"], "path": ["properties", "offers"], "query": [{ "key": "propertyId", "value": "" }, { "key": "arrival", "value": "2026-08-01" }, { "key": "departure", "value": "2026-08-05" }, { "key": "numAdult", "value": "2" }] },
+            "description": "Returns bookable offers (available room/rate combinations) for a property over a date range."
+          }
+        },
+        {
+          "name": "Create or modify properties",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[\n  {\n    \"name\": \"Seaside Villa\",\n    \"currency\": \"EUR\"\n  }\n]" },
+            "url": { "raw": "{{baseUrl}}/properties", "host": ["{{baseUrl}}"], "path": ["properties"] },
+            "description": "Creates or updates properties and rooms (modeled)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inventory",
+      "item": [
+        {
+          "name": "Get room calendar (price and availability)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/inventory/rooms/calendar?roomId=&startDate=2026-01-01&endDate=2026-12-31&includePrices=true&includeNumAvail=true", "host": ["{{baseUrl}}"], "path": ["inventory", "rooms", "calendar"], "query": [{ "key": "roomId", "value": "" }, { "key": "startDate", "value": "2026-01-01" }, { "key": "endDate", "value": "2026-12-31" }, { "key": "includePrices", "value": "true" }, { "key": "includeNumAvail", "value": "true" }] },
+            "description": "Retrieves per-day price and availability in bulk, suitable for caching locally."
+          }
+        },
+        {
+          "name": "Update room calendar",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[\n  {\n    \"roomId\": 0,\n    \"calendar\": [\n      { \"from\": \"2026-08-01\", \"to\": \"2026-08-31\", \"numAvail\": 1, \"price1\": 120.0, \"minStay\": 2 }\n    ]\n  }\n]" },
+            "url": { "raw": "{{baseUrl}}/inventory/rooms/calendar", "host": ["{{baseUrl}}"], "path": ["inventory", "rooms", "calendar"] },
+            "description": "Updates prices and availability per room and date range; propagates to connected channels."
+          }
+        },
+        {
+          "name": "Get room availability",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/inventory/rooms/availability?roomId=&startDate=2026-08-01&endDate=2026-08-31", "host": ["{{baseUrl}}"], "path": ["inventory", "rooms", "availability"], "query": [{ "key": "roomId", "value": "" }, { "key": "startDate", "value": "2026-08-01" }, { "key": "endDate", "value": "2026-08-31" }] },
+            "description": "Returns whether dates are available or not for the specified rooms."
+          }
+        },
+        {
+          "name": "Get fixed prices",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/inventory/fixedPrices?propertyId=&roomId=", "host": ["{{baseUrl}}"], "path": ["inventory", "fixedPrices"], "query": [{ "key": "propertyId", "value": "" }, { "key": "roomId", "value": "" }] },
+            "description": "Returns the fixed price rules and rate plans configured for rooms."
+          }
+        },
+        {
+          "name": "Create or modify fixed prices",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[\n  {\n    \"roomId\": 0,\n    \"name\": \"Summer rate\",\n    \"firstNight\": \"2026-06-01\",\n    \"lastNight\": \"2026-08-31\",\n    \"minNights\": 3,\n    \"roomPrice\": 150.0\n  }\n]" },
+            "url": { "raw": "{{baseUrl}}/inventory/fixedPrices", "host": ["{{baseUrl}}"], "path": ["inventory", "fixedPrices"] },
+            "description": "Creates or updates fixed price rules and rate plans."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Channels",
+      "item": [
+        {
+          "name": "Get channel connections",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/channels?propertyId=", "host": ["{{baseUrl}}"], "path": ["channels"], "query": [{ "key": "propertyId", "value": "" }] },
+            "description": "Returns OTA channel connections and room/rate mappings for the account (modeled)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Get account information",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/accounts", "host": ["{{baseUrl}}"], "path": ["accounts"] },
+            "description": "Returns account-level information, including sub-accounts and users (modeled)."
+          }
+        }
+      ]
+    }
+  ]
+}

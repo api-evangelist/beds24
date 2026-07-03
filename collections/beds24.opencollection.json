@@ -1,0 +1,246 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Beds24 API V2",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Authentication", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get refresh token from invite code", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.beds24.com/v2/authentication/setup" },
+          "docs": "Exchanges an invite code for a refresh token and an initial access token."
+        },
+        {
+          "info": { "name": "Get access token from refresh token", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.beds24.com/v2/authentication/token" },
+          "docs": "Generates a short-lived access token from a refresh token."
+        },
+        {
+          "info": { "name": "Get token details", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.beds24.com/v2/authentication/details" },
+          "docs": "Returns diagnostics about the current token, including scopes and validity."
+        },
+        {
+          "info": { "name": "Revoke token", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.beds24.com/v2/authentication/token" },
+          "docs": "Invalidates the refresh token used to authenticate this request."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Bookings", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get bookings", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/bookings",
+            "params": [
+              { "name": "propertyId", "value": "", "type": "query", "description": "Filter to a property." },
+              { "name": "status", "value": "", "type": "query", "description": "new, request, confirmed, cancelled, black, inquiry." },
+              { "name": "arrivalFrom", "value": "", "type": "query" },
+              { "name": "arrivalTo", "value": "", "type": "query" },
+              { "name": "includeInvoiceItems", "value": "true", "type": "query" }
+            ]
+          },
+          "docs": "Returns bookings matching the supplied filters across all connected channels."
+        },
+        {
+          "info": { "name": "Create or modify bookings", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/bookings",
+            "body": { "type": "json", "data": "[{\"roomId\":0,\"status\":\"confirmed\",\"arrival\":\"2026-08-01\",\"departure\":\"2026-08-05\",\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"email\":\"jane@example.com\",\"numAdult\":2}]" }
+          },
+          "docs": "Creates new bookings or modifies existing ones when an id is supplied."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Invoices", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get invoice items", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/bookings/invoiceitems",
+            "params": [{ "name": "bookingId", "value": "", "type": "query" }]
+          },
+          "docs": "Returns invoice items, charges, and payments attached to bookings (modeled)."
+        },
+        {
+          "info": { "name": "Create or modify invoice items", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/bookings/invoiceitems",
+            "body": { "type": "json", "data": "[{\"bookingId\":0,\"type\":\"charge\",\"description\":\"Cleaning fee\",\"qty\":1,\"amount\":50.0,\"vatRate\":20}]" }
+          },
+          "docs": "Writes invoice items (charges and payments) onto bookings (modeled)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Messages", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get booking messages", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/bookings/messages",
+            "params": [{ "name": "bookingId", "value": "", "type": "query" }]
+          },
+          "docs": "Returns guest and channel messages for the specified bookings."
+        },
+        {
+          "info": { "name": "Post booking message", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/bookings/messages",
+            "body": { "type": "json", "data": "[{\"bookingId\":0,\"message\":\"Thanks for your booking, check-in is from 3pm.\"}]" }
+          },
+          "docs": "Posts a guest or channel message to one or more bookings."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Properties", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get properties", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/properties",
+            "params": [
+              { "name": "includeAllRooms", "value": "true", "type": "query" },
+              { "name": "includeTexts", "value": "true", "type": "query" }
+            ]
+          },
+          "docs": "Returns properties and their rooms matching the supplied criteria."
+        },
+        {
+          "info": { "name": "Get bookable offers", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/properties/offers",
+            "params": [
+              { "name": "propertyId", "value": "", "type": "query" },
+              { "name": "arrival", "value": "2026-08-01", "type": "query" },
+              { "name": "departure", "value": "2026-08-05", "type": "query" },
+              { "name": "numAdult", "value": "2", "type": "query" }
+            ]
+          },
+          "docs": "Returns bookable offers (available room/rate combinations) for a property over a date range."
+        },
+        {
+          "info": { "name": "Create or modify properties", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/properties",
+            "body": { "type": "json", "data": "[{\"name\":\"Seaside Villa\",\"currency\":\"EUR\"}]" }
+          },
+          "docs": "Creates or updates properties and rooms (modeled)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Inventory", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get room calendar (price and availability)", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/inventory/rooms/calendar",
+            "params": [
+              { "name": "roomId", "value": "", "type": "query" },
+              { "name": "startDate", "value": "2026-01-01", "type": "query" },
+              { "name": "endDate", "value": "2026-12-31", "type": "query" },
+              { "name": "includePrices", "value": "true", "type": "query" },
+              { "name": "includeNumAvail", "value": "true", "type": "query" }
+            ]
+          },
+          "docs": "Retrieves per-day price and availability in bulk, suitable for caching locally."
+        },
+        {
+          "info": { "name": "Update room calendar", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/inventory/rooms/calendar",
+            "body": { "type": "json", "data": "[{\"roomId\":0,\"calendar\":[{\"from\":\"2026-08-01\",\"to\":\"2026-08-31\",\"numAvail\":1,\"price1\":120.0,\"minStay\":2}]}]" }
+          },
+          "docs": "Updates prices and availability per room and date range; propagates to connected channels."
+        },
+        {
+          "info": { "name": "Get room availability", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/inventory/rooms/availability",
+            "params": [
+              { "name": "roomId", "value": "", "type": "query" },
+              { "name": "startDate", "value": "2026-08-01", "type": "query" },
+              { "name": "endDate", "value": "2026-08-31", "type": "query" }
+            ]
+          },
+          "docs": "Returns whether dates are available or not for the specified rooms."
+        },
+        {
+          "info": { "name": "Get fixed prices", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/inventory/fixedPrices",
+            "params": [
+              { "name": "propertyId", "value": "", "type": "query" },
+              { "name": "roomId", "value": "", "type": "query" }
+            ]
+          },
+          "docs": "Returns the fixed price rules and rate plans configured for rooms."
+        },
+        {
+          "info": { "name": "Create or modify fixed prices", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/inventory/fixedPrices",
+            "body": { "type": "json", "data": "[{\"roomId\":0,\"name\":\"Summer rate\",\"firstNight\":\"2026-06-01\",\"lastNight\":\"2026-08-31\",\"minNights\":3,\"roomPrice\":150.0}]" }
+          },
+          "docs": "Creates or updates fixed price rules and rate plans."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Channels", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get channel connections", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/channels",
+            "params": [{ "name": "propertyId", "value": "", "type": "query" }]
+          },
+          "docs": "Returns OTA channel connections and room/rate mappings for the account (modeled)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Accounts", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get account information", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.beds24.com/v2/accounts" },
+          "docs": "Returns account-level information, including sub-accounts and users (modeled)."
+        }
+      ]
+    }
+  ]
+}

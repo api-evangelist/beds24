@@ -1,0 +1,119 @@
+aid: beds24
+name: Beds24
+review:
+  question: Does Beds24 expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Beds24's documented public API (V2 at
+    api.beds24.com/v2 and the legacy JSON/XML V1) is request/response REST over
+    HTTPS - there is no WebSocket (ws:// or wss://) or Server-Sent Events
+    transport on Beds24's own API to model. Beds24 does offer outbound booking
+    "webhooks" / notifications that POST to a URL you configure, but that is
+    server-to-endpoint HTTP configured in the control panel, not a bidirectional
+    WebSocket surface, so there is no server-push protocol on Beds24's own API to
+    describe with AsyncAPI.
+findings:
+  summary: |
+    Beds24 does not publish a documented public WebSocket API. Beds24 is a
+    vacation rental and hotel channel manager, property management system, and
+    booking engine. Its current public API is V2 (base https://api.beds24.com/v2)
+    with a documented OpenAPI/Swagger UI at https://api.beds24.com/v2/, plus a
+    legacy JSON/XML V1 API. Authentication is token based: an invite code is
+    exchanged for a long-life refresh token (or a read-only long-life token), the
+    refresh token generates short-lived access tokens, and the access token is
+    sent in the "token" request header. Each API category (bookings, properties,
+    inventory, channels, accounts) requires a matching scope. All calls are
+    request/response REST over HTTPS. Usage is governed by an account-level
+    credit limit over a rolling 5-minute window (default 100 credits), reported
+    via x-five-min-limit-remaining, x-five-min-limit-resets-in, and
+    x-request-cost response headers. No realtime, bidirectional, or streaming
+    WebSocket endpoint is documented on Beds24's API.
+  openSource: |
+    Beds24 is a proprietary, commercial SaaS platform - the API is included with
+    a paid account rather than sold separately, and the server is not open
+    source. Community-built API wrappers exist on GitHub (for example
+    github.com/mihilbabin/beds24) but the Beds24 platform itself is closed source.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.beds24.com/v2
+      documented: true
+      note: API V2 - token header auth, OpenAPI/Swagger UI at https://api.beds24.com/v2/.
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.beds24.com/json
+      documented: true
+      note: Legacy V1 JSON API (getBookings, setBookings, etc.); XML V1 is deprecated.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Outbound booking notifications POST to a configured URL. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Beds24 V2 or V1 API as of the review date.
+  endpointsConfirmed:
+    - GET    https://api.beds24.com/v2/authentication/setup
+    - GET    https://api.beds24.com/v2/authentication/token
+    - GET    https://api.beds24.com/v2/authentication/details
+    - GET    https://api.beds24.com/v2/bookings
+    - POST   https://api.beds24.com/v2/bookings
+    - GET    https://api.beds24.com/v2/bookings/messages
+    - POST   https://api.beds24.com/v2/bookings/messages
+    - GET    https://api.beds24.com/v2/properties
+    - GET    https://api.beds24.com/v2/properties/offers
+    - GET    https://api.beds24.com/v2/inventory/rooms/calendar
+    - POST   https://api.beds24.com/v2/inventory/rooms/calendar
+    - GET    https://api.beds24.com/v2/inventory/rooms/availability
+    - GET    https://api.beds24.com/v2/inventory/fixedPrices
+  endpointsModeled:
+    - DELETE https://api.beds24.com/v2/authentication/token
+    - GET    https://api.beds24.com/v2/bookings/invoiceitems
+    - POST   https://api.beds24.com/v2/bookings/invoiceitems
+    - POST   https://api.beds24.com/v2/properties
+    - POST   https://api.beds24.com/v2/inventory/rooms/availability
+    - POST   https://api.beds24.com/v2/inventory/fixedPrices
+    - DELETE https://api.beds24.com/v2/inventory/fixedPrices
+    - GET    https://api.beds24.com/v2/channels
+    - POST   https://api.beds24.com/v2/channels
+    - GET    https://api.beds24.com/v2/accounts
+  modeledNote: |
+    The live Swagger JSON at https://api.beds24.com/v2/swagger.json requires a
+    valid token to retrieve (it returns 401 "Token is missing" unauthenticated),
+    so the exact request/response schemas and the precise paths for the invoices,
+    channels, and accounts categories were modeled from the Beds24 wiki, the
+    developer-api page, and community wrappers rather than byte-verified. The
+    authentication, bookings, bookings/messages, properties, properties/offers,
+    and inventory (rooms/calendar, rooms/availability, fixedPrices) surfaces are
+    directly grounded in Beds24's published API V2 documentation.
+sources:
+  - url: https://beds24.com/developer-api.html
+    type: Documentation
+    note: API V2 overview - RESTful, OpenAPI, base api.beds24.com/v2, token handling, scopes, IP whitelisting.
+  - url: https://api.beds24.com/v2/
+    type: APIReference
+    note: Interactive Swagger UI for API V2. The underlying swagger.json requires an auth token (401 unauthenticated).
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: Documentation
+    note: API V2 category - token auth via the "token" header, scopes, inventory/rooms/calendar and availability, credit headers.
+  - url: https://beds24.com/api/
+    type: Documentation
+    note: Legacy V1 API categories (CSV, OTA, JSON, deprecated XML); 5-minute-window usage warning.
+  - url: https://beds24.com/pricing.html
+    type: Pricing
+    note: Pay-as-you-go per-rental pricing; API included with paid accounts.
+  - url: https://github.com/mihilbabin/beds24
+    type: SourceCode
+    note: Community Beds24 API wrapper confirming /properties and /bookings usage.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists on Beds24's own API, and the documented
+    public API is request/response REST (V2 token-authenticated, plus legacy V1
+    JSON/XML). No AsyncAPI document was created because there is no server-push
+    transport on Beds24's own API to model; outbound booking notifications are
+    configured HTTP callbacks (webhooks), not a WebSocket surface.

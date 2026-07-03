@@ -1,0 +1,239 @@
+aid: beds24
+url: https://raw.githubusercontent.com/api-evangelist/beds24/refs/heads/main/apis.yml
+name: Beds24
+kind: company
+description: Beds24 is a vacation rental and hotel channel manager, property management
+  system (PMS), and online booking engine. It synchronizes availability, rates, and
+  reservations across OTAs such as Booking.com, Airbnb, Expedia, Vrbo, and Google,
+  and exposes a documented REST API (v2 at api.beds24.com/v2, with a legacy JSON/XML
+  v1) for reading and writing bookings, properties, room inventory, availability
+  calendars, prices, invoices, channels, and account data. API V2 uses expiring
+  access tokens generated from refresh tokens, scoped permissions, optional IP
+  whitelisting, and a credit-based rate limit enforced per account over a rolling
+  5-minute window.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Vacation Rental
+- Hotel
+- Channel Manager
+- Property Management System
+- Booking Engine
+- Hospitality
+- Reservations
+created: '2026-07-03'
+modified: '2026-07-03'
+specificationVersion: '0.19'
+apis:
+- aid: beds24:beds24-authentication-api
+  name: Beds24 Authentication API
+  tags:
+  - Authentication
+  - Tokens
+  - OAuth
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/Category:API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://beds24.com/developer-api.html
+    type: Documentation
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: APIReference
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: Exchange an invite code for a long-life refresh token, generate short-lived
+    access tokens from that refresh token, inspect token scopes and diagnostics, and
+    revoke tokens. Access tokens are sent in the "token" request header and each API
+    category requires a matching scope.
+- aid: beds24:beds24-bookings-api
+  name: Beds24 Bookings API
+  tags:
+  - Bookings
+  - Reservations
+  - Guests
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/Category:API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: APIReference
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: Search, read, create, and modify reservations across all connected
+    channels - filter bookings by property, room, arrival/departure, status, and
+    modification time, and write new or updated bookings, guest details, statuses,
+    and booking-level notes and info items.
+- aid: beds24:beds24-invoices-api
+  name: Beds24 Invoices & Charges API
+  tags:
+  - Invoices
+  - Payments
+  - Charges
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/Category:API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: APIReference
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: Read and write the invoice items, charges, and payments attached to a
+    booking - line-item description, quantity, price, type, and VAT - so external
+    accounting and payment tooling can reconcile guest financials held in Beds24.
+- aid: beds24:beds24-booking-messages-api
+  name: Beds24 Booking Messages API
+  tags:
+  - Messages
+  - Guest Communication
+  - Notifications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/Category:API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: APIReference
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: Retrieve and post guest and channel messages associated with a booking,
+    enabling two-way messaging with guests and OTAs (for example Booking.com and
+    Airbnb) from an external inbox or automation.
+- aid: beds24:beds24-properties-api
+  name: Beds24 Properties API
+  tags:
+  - Properties
+  - Rooms
+  - Configuration
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/Category:API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: APIReference
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: List and read property and room configuration - names, room types,
+    units, descriptions, texts, settings, and bookable offers - and create or modify
+    properties and rooms, providing the structural catalog behind availability and
+    pricing.
+- aid: beds24:beds24-availability-calendar-api
+  name: Beds24 Availability & Calendar API
+  tags:
+  - Availability
+  - Calendar
+  - Inventory
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/Category:API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: APIReference
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: Read and write per-day room inventory - the calendar of number of units
+    available, min/max stay, and open/close status - via the inventory calendar and
+    availability endpoints. Retrieve one year at a time to cache locally, and push
+    availability updates back to synchronize channels.
+- aid: beds24:beds24-rates-prices-api
+  name: Beds24 Rates & Prices API
+  tags:
+  - Rates
+  - Prices
+  - Offers
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/Category:API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: APIReference
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: Manage per-day prices in the inventory calendar and the fixed price
+    rules and bookable offers that drive channel and booking-engine pricing - list,
+    create, update, and delete fixed prices, and set daily rates alongside
+    availability.
+- aid: beds24:beds24-channels-api
+  name: Beds24 Channels API
+  tags:
+  - Channels
+  - OTA
+  - Distribution
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/OTAs:_How_to_connect_to_Beds24_using_API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://wiki.beds24.com/index.php/OTAs:_How_to_connect_to_Beds24_using_API_V2
+    type: Documentation
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: Manage OTA channel connections and mappings that distribute inventory
+    to Booking.com, Airbnb, Expedia, Vrbo, and other portals - reading channel
+    configuration and pushing the room, rate, and availability mappings that keep
+    external listings in sync.
+- aid: beds24:beds24-accounts-api
+  name: Beds24 Accounts API
+  tags:
+  - Accounts
+  - Users
+  - Management
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://wiki.beds24.com/index.php/Category:API_V2
+  baseURL: https://api.beds24.com/v2
+  properties:
+  - url: https://wiki.beds24.com/index.php/Category:API_V2
+    type: APIReference
+  - url: openapi/beds24-openapi.yml
+    type: OpenAPI
+  - url: collections/beds24.postman_collection.json
+    type: PostmanCollection
+  - url: collections/beds24.opencollection.json
+    type: OpenCollection
+  description: Read account-level information and manage sub-accounts and users -
+    surfacing the account context, permissions, and structure that scope every other
+    API category and its shared credit-based rate limit.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/beds24
+- type: Website
+  url: https://beds24.com
+- type: Documentation
+  url: https://wiki.beds24.com/index.php/Category:API_V2
+- type: Plans
+  url: plans/beds24-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/beds24-rate-limits.yml
+- type: FinOps
+  url: finops/beds24-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
