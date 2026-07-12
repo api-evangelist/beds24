@@ -222,6 +222,10 @@ apis:
     surfacing the account context, permissions, and structure that scope every other
     API category and its shared credit-based rate limit.
 common:
+- type: DomainSecurity
+  url: security/beds24-domain-security.yml
+- type: Authentication
+  url: authentication/beds24-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/beds24
 - type: Website
