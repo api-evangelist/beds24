@@ -1,0 +1,298 @@
+openapi: 3.0.3
+info:
+  title: Beds24 API V2 Accounts Bookings API
+  description: 'The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.
+
+    Base URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the "token" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.
+
+    This document models the public V2 surface from Beds24''s Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.'
+  version: '2.0'
+  contact:
+    name: Beds24
+    url: https://beds24.com
+  license:
+    name: Proprietary
+    url: https://beds24.com/terms.html
+servers:
+- url: https://api.beds24.com/v2
+  description: Beds24 API V2 production
+security:
+- tokenAuth: []
+tags:
+- name: Bookings
+  description: Read, create, and modify reservations across all channels.
+paths:
+  /bookings:
+    get:
+      operationId: getBookings
+      tags:
+      - Bookings
+      summary: Get bookings
+      description: Returns bookings matching the supplied filters. Filter by property, room, arrival/departure window, status, and modification time. Supports paging.
+      parameters:
+      - name: propertyId
+        in: query
+        schema:
+          type: integer
+        description: Filter to a property.
+      - name: roomId
+        in: query
+        schema:
+          type: integer
+      - name: arrivalFrom
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: arrivalTo
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: departureFrom
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: departureTo
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - new
+          - request
+          - confirmed
+          - cancelled
+          - black
+          - inquiry
+      - name: modifiedFrom
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: includeInvoiceItems
+        in: query
+        schema:
+          type: boolean
+      - name: includeInfoItems
+        in: query
+        schema:
+          type: boolean
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: A page of bookings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  type:
+                    type: string
+                  count:
+                    type: integer
+                  pages:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Booking'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      operationId: postBookings
+      tags:
+      - Bookings
+      summary: Create or modify bookings
+      description: Creates new bookings or modifies existing ones (when an id is supplied). Accepts an array so multiple bookings can be written in one request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BookingWrite'
+      responses:
+        '200':
+          description: Write results per booking.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingWriteResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    Booking:
+      type: object
+      properties:
+        id:
+          type: integer
+        propertyId:
+          type: integer
+        roomId:
+          type: integer
+        unitId:
+          type: integer
+        status:
+          type: string
+        arrival:
+          type: string
+          format: date
+        departure:
+          type: string
+          format: date
+        numAdult:
+          type: integer
+        numChild:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        price:
+          type: number
+        referer:
+          type: string
+        apiSource:
+          type: string
+        bookingTime:
+          type: string
+          format: date-time
+        modifiedTime:
+          type: string
+          format: date-time
+        invoiceItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem'
+        infoItems:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    BookingWriteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: integer
+        warnings:
+          type: array
+          items:
+            type: string
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
+    BookingWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Supply to modify an existing booking; omit to create.
+        roomId:
+          type: integer
+        status:
+          type: string
+        arrival:
+          type: string
+          format: date
+        departure:
+          type: string
+          format: date
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        numAdult:
+          type: integer
+        invoiceItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem'
+    InvoiceItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        bookingId:
+          type: integer
+        type:
+          type: string
+          enum:
+          - charge
+          - payment
+        description:
+          type: string
+        qty:
+          type: number
+        amount:
+          type: number
+        vatRate:
+          type: number
+        lineTotal:
+          type: number
+  responses:
+    Unauthorized:
+      description: The token is missing, invalid, expired, or lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.
+      headers:
+        x-five-min-limit-remaining:
+          schema:
+            type: integer
+          description: Credits remaining in the current 5-minute period.
+        x-five-min-limit-resets-in:
+          schema:
+            type: integer
+          description: Seconds until the current period resets.
+        x-request-cost:
+          schema:
+            type: integer
+          description: Credits this request cost.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: Short-lived access token generated from a refresh token via the /authentication endpoints, sent in the "token" request header.

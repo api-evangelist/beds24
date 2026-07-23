@@ -1,0 +1,236 @@
+openapi: 3.0.3
+info:
+  title: Beds24 API V2 Accounts Properties API
+  description: 'The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.
+
+    Base URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the "token" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.
+
+    This document models the public V2 surface from Beds24''s Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.'
+  version: '2.0'
+  contact:
+    name: Beds24
+    url: https://beds24.com
+  license:
+    name: Proprietary
+    url: https://beds24.com/terms.html
+servers:
+- url: https://api.beds24.com/v2
+  description: Beds24 API V2 production
+security:
+- tokenAuth: []
+tags:
+- name: Properties
+  description: Property and room configuration and bookable offers.
+paths:
+  /properties:
+    get:
+      operationId: getProperties
+      tags:
+      - Properties
+      summary: Get properties
+      description: Returns properties and their rooms matching the supplied criteria.
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        style: form
+        explode: true
+        description: Filter to one or more property ids.
+      - name: includeAllRooms
+        in: query
+        schema:
+          type: boolean
+      - name: includeTexts
+        in: query
+        schema:
+          type: boolean
+      - name: includePriceRules
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A list of properties.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postProperties
+      tags:
+      - Properties
+      summary: Create or modify properties
+      description: Creates or updates properties and rooms. Modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Property'
+      responses:
+        '200':
+          description: Property write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /properties/offers:
+    get:
+      operationId: getPropertyOffers
+      tags:
+      - Properties
+      summary: Get bookable offers
+      description: Returns bookable offers (available room/rate combinations) for a property over a date range, as used by a booking engine.
+      parameters:
+      - name: propertyId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: arrival
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: departure
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: numAdult
+        in: query
+        schema:
+          type: integer
+      - name: numChild
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of bookable offers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Offer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Property:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        propertyType:
+          type: string
+        currency:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        roomTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Room'
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
+    Offer:
+      type: object
+      properties:
+        roomId:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        available:
+          type: integer
+        arrival:
+          type: string
+          format: date
+        departure:
+          type: string
+          format: date
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        qty:
+          type: integer
+        maxPeople:
+          type: integer
+        minStay:
+          type: integer
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+        new:
+          type: object
+          additionalProperties: true
+        modified:
+          type: object
+          additionalProperties: true
+        warnings:
+          type: array
+          items:
+            type: string
+  responses:
+    Unauthorized:
+      description: The token is missing, invalid, expired, or lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: Short-lived access token generated from a refresh token via the /authentication endpoints, sent in the "token" request header.

@@ -1,0 +1,392 @@
+openapi: 3.0.3
+info:
+  title: Beds24 API V2 Accounts Inventory API
+  description: 'The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.
+
+    Base URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the "token" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.
+
+    This document models the public V2 surface from Beds24''s Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.'
+  version: '2.0'
+  contact:
+    name: Beds24
+    url: https://beds24.com
+  license:
+    name: Proprietary
+    url: https://beds24.com/terms.html
+servers:
+- url: https://api.beds24.com/v2
+  description: Beds24 API V2 production
+security:
+- tokenAuth: []
+tags:
+- name: Inventory
+  description: Per-day availability calendar, availability status, and fixed prices.
+paths:
+  /inventory/rooms/calendar:
+    get:
+      operationId: getRoomCalendar
+      tags:
+      - Inventory
+      summary: Get per-day price and availability
+      description: Retrieves per-day price and availability for rooms in bulk (for example a year at a time) suitable for caching locally. Returns number of units available, min/max stay, prices, and open/close status per date.
+      parameters:
+      - name: roomId
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        style: form
+        explode: true
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: includePrices
+        in: query
+        schema:
+          type: boolean
+      - name: includeNumAvail
+        in: query
+        schema:
+          type: boolean
+      - name: includeMinStay
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Per-day calendar entries.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CalendarDay'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      operationId: postRoomCalendar
+      tags:
+      - Inventory
+      summary: Update per-day price and availability
+      description: Updates prices and availability per room and date range - number of units available, min/max stay, and open/close status - which propagates to connected channels.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CalendarWrite'
+      responses:
+        '200':
+          description: Calendar write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /inventory/rooms/availability:
+    get:
+      operationId: getRoomAvailability
+      tags:
+      - Inventory
+      summary: Get availability status of dates
+      description: Returns whether dates are available or not for the specified rooms.
+      parameters:
+      - name: roomId
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        style: form
+        explode: true
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Availability status per date.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AvailabilityDay'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postRoomAvailability
+      tags:
+      - Inventory
+      summary: Update availability of dates
+      description: Sets availability (open/close and number of units) for rooms and dates. Modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AvailabilityDay'
+      responses:
+        '200':
+          description: Availability write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /inventory/fixedPrices:
+    get:
+      operationId: getFixedPrices
+      tags:
+      - Inventory
+      summary: Get fixed prices
+      description: Returns the fixed price rules and rate plans configured for rooms.
+      parameters:
+      - name: propertyId
+        in: query
+        schema:
+          type: integer
+      - name: roomId
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of fixed prices.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FixedPrice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postFixedPrices
+      tags:
+      - Inventory
+      summary: Create or modify fixed prices
+      description: Creates or updates fixed price rules and rate plans.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FixedPrice'
+      responses:
+        '200':
+          description: Fixed price write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteFixedPrices
+      tags:
+      - Inventory
+      summary: Delete fixed prices
+      description: Deletes fixed price rules by id. Modeled.
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Delete result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    AvailabilityDay:
+      type: object
+      properties:
+        roomId:
+          type: integer
+        date:
+          type: string
+          format: date
+        available:
+          type: boolean
+        numAvail:
+          type: integer
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
+    CalendarDay:
+      type: object
+      properties:
+        roomId:
+          type: integer
+        date:
+          type: string
+          format: date
+        numAvail:
+          type: integer
+        price1:
+          type: number
+        minStay:
+          type: integer
+        maxStay:
+          type: integer
+        override:
+          type: string
+    CalendarWrite:
+      type: object
+      properties:
+        roomId:
+          type: integer
+        calendar:
+          type: array
+          items:
+            type: object
+            properties:
+              from:
+                type: string
+                format: date
+              to:
+                type: string
+                format: date
+              numAvail:
+                type: integer
+              price1:
+                type: number
+              minStay:
+                type: integer
+    FixedPrice:
+      type: object
+      properties:
+        id:
+          type: integer
+        propertyId:
+          type: integer
+        roomId:
+          type: integer
+        name:
+          type: string
+        firstNight:
+          type: string
+          format: date
+        lastNight:
+          type: string
+          format: date
+        minNights:
+          type: integer
+        maxNights:
+          type: integer
+        roomPrice:
+          type: number
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+        new:
+          type: object
+          additionalProperties: true
+        modified:
+          type: object
+          additionalProperties: true
+        warnings:
+          type: array
+          items:
+            type: string
+  responses:
+    TooManyRequests:
+      description: The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.
+      headers:
+        x-five-min-limit-remaining:
+          schema:
+            type: integer
+          description: Credits remaining in the current 5-minute period.
+        x-five-min-limit-resets-in:
+          schema:
+            type: integer
+          description: Seconds until the current period resets.
+        x-request-cost:
+          schema:
+            type: integer
+          description: Credits this request cost.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The token is missing, invalid, expired, or lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: Short-lived access token generated from a refresh token via the /authentication endpoints, sent in the "token" request header.

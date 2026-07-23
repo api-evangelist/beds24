@@ -1,0 +1,141 @@
+openapi: 3.0.3
+info:
+  title: Beds24 API V2 Accounts Invoices API
+  description: 'The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.
+
+    Base URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the "token" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.
+
+    This document models the public V2 surface from Beds24''s Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.'
+  version: '2.0'
+  contact:
+    name: Beds24
+    url: https://beds24.com
+  license:
+    name: Proprietary
+    url: https://beds24.com/terms.html
+servers:
+- url: https://api.beds24.com/v2
+  description: Beds24 API V2 production
+security:
+- tokenAuth: []
+tags:
+- name: Invoices
+  description: Invoice items, charges, and payments attached to bookings.
+paths:
+  /bookings/invoiceitems:
+    get:
+      operationId: getInvoiceItems
+      tags:
+      - Invoices
+      summary: Get invoice items
+      description: Returns invoice items, charges, and payments attached to bookings. Modeled - in the live V2 API invoice items are also returnable inline on the bookings resource via includeInvoiceItems.
+      parameters:
+      - name: bookingId
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of invoice items.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InvoiceItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: postInvoiceItems
+      tags:
+      - Invoices
+      summary: Create or modify invoice items
+      description: Writes invoice items (charges and payments) onto bookings. Modeled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/InvoiceItem'
+      responses:
+        '200':
+          description: Invoice item write results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+        new:
+          type: object
+          additionalProperties: true
+        modified:
+          type: object
+          additionalProperties: true
+        warnings:
+          type: array
+          items:
+            type: string
+    InvoiceItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        bookingId:
+          type: integer
+        type:
+          type: string
+          enum:
+          - charge
+          - payment
+        description:
+          type: string
+        qty:
+          type: number
+        amount:
+          type: number
+        vatRate:
+          type: number
+        lineTotal:
+          type: number
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
+  responses:
+    Unauthorized:
+      description: The token is missing, invalid, expired, or lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: Short-lived access token generated from a refresh token via the /authentication endpoints, sent in the "token" request header.
