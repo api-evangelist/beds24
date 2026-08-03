@@ -1,0 +1,28 @@
+{
+  "provider": "beds24",
+  "sources": [
+    "beds24-accounts-api-openapi.yml",
+    "beds24-authentication-api-openapi.yml",
+    "beds24-bookings-api-openapi.yml",
+    "beds24-channels-api-openapi.yml",
+    "beds24-inventory-api-openapi.yml",
+    "beds24-invoices-api-openapi.yml",
+    "beds24-messages-api-openapi.yml",
+    "beds24-properties-api-openapi.yml"
+  ],
+  "outputs": [
+    "beds24-accounts-api-openapi.yml",
+    "beds24-authentication-api-openapi.yml",
+    "beds24-bookings-api-openapi.yml",
+    "beds24-channels-api-openapi.yml",
+    "beds24-inventory-api-openapi.yml",
+    "beds24-invoices-api-openapi.yml",
+    "beds24-messages-api-openapi.yml",
+    "beds24-properties-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
