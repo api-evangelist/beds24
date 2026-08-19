@@ -1,0 +1,183 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Beds24 API V2 Accounts Inventory API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inventory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get per-day price and availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/inventory/rooms/calendar",
+            "params": [
+              {
+                "name": "roomId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includePrices",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeNumAvail",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeMinStay",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves per-day price and availability for rooms in bulk (for example a year at a time) suitable for caching locally. Returns number of units available, min/max stay, prices, and open/close status per date."
+        },
+        {
+          "info": {
+            "name": "Update per-day price and availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/inventory/rooms/calendar",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates prices and availability per room and date range - number of units available, min/max stay, and open/close status - which propagates to connected channels."
+        },
+        {
+          "info": {
+            "name": "Get availability status of dates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/inventory/rooms/availability",
+            "params": [
+              {
+                "name": "roomId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns whether dates are available or not for the specified rooms."
+        },
+        {
+          "info": {
+            "name": "Update availability of dates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/inventory/rooms/availability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets availability (open/close and number of units) for rooms and dates. Modeled."
+        },
+        {
+          "info": {
+            "name": "Get fixed prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/inventory/fixedPrices",
+            "params": [
+              {
+                "name": "propertyId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "roomId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the fixed price rules and rate plans configured for rooms."
+        },
+        {
+          "info": {
+            "name": "Create or modify fixed prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/inventory/fixedPrices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates fixed price rules and rate plans."
+        },
+        {
+          "info": {
+            "name": "Delete fixed prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.beds24.com/v2/inventory/fixedPrices",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes fixed price rules by id. Modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

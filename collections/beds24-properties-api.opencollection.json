@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Beds24 API V2 Accounts Properties API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Properties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/properties",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to one or more property ids."
+              },
+              {
+                "name": "includeAllRooms",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeTexts",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includePriceRules",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns properties and their rooms matching the supplied criteria."
+        },
+        {
+          "info": {
+            "name": "Create or modify properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/properties",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates properties and rooms. Modeled."
+        },
+        {
+          "info": {
+            "name": "Get bookable offers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/properties/offers",
+            "params": [
+              {
+                "name": "propertyId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "arrival",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "departure",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "numAdult",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "numChild",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns bookable offers (available room/rate combinations) for a property over a date range, as used by a booking engine."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

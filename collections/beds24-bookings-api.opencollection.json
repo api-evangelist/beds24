@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Beds24 API V2 Accounts Bookings API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bookings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get bookings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/bookings",
+            "params": [
+              {
+                "name": "propertyId",
+                "value": "",
+                "type": "query",
+                "description": "Filter to a property."
+              },
+              {
+                "name": "roomId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "arrivalFrom",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "arrivalTo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "departureFrom",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "departureTo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "modifiedFrom",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeInvoiceItems",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeInfoItems",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns bookings matching the supplied filters. Filter by property, room, arrival/departure window, status, and modification time. Supports paging."
+        },
+        {
+          "info": {
+            "name": "Create or modify bookings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/bookings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new bookings or modifies existing ones (when an id is supplied). Accepts an array so multiple bookings can be written in one request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

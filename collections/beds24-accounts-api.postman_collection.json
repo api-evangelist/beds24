@@ -1,0 +1,170 @@
+{
+  "item": [
+    {
+      "id": "2fad30ed-589d-4e61-b3cd-0a9715fd84a9",
+      "name": "Accounts",
+      "description": {
+        "content": "Account-level information, sub-accounts, and users.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4f1ab151-a2cd-40f4-8e5e-b0ae2d1704c8",
+          "name": "Get account information",
+          "request": {
+            "name": "Get account information",
+            "description": {
+              "content": "Returns account-level information, including sub-accounts and users, that scopes every other API category. Modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5a7a6cef-a15b-4a0c-9863-7dee278564d0",
+              "name": "Account information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": [\n    {\n      \"id\": 5335,\n      \"username\": \"string\",\n      \"name\": \"string\",\n      \"role\": \"string\",\n      \"subAccounts\": [\n        {\n          \"key_0\": 6059,\n          \"key_1\": \"string\",\n          \"key_2\": true\n        },\n        {\n          \"key_0\": 9034.640270001177,\n          \"key_1\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": 3495,\n      \"username\": \"string\",\n      \"name\": \"string\",\n      \"role\": \"string\",\n      \"subAccounts\": [\n        {\n          \"key_0\": 9762,\n          \"key_1\": true\n        },\n        {\n          \"key_0\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48b9b58a-4a25-4acd-a8bb-0bb1c2cdb350",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.beds24.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "579d0ffb-421d-4e19-9cdb-02560e97efaf",
+    "name": "Beds24 API V2 Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.\nBase URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the \"token\" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.\nThis document models the public V2 surface from Beds24's Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.\n\nContact Support:\n Name: Beds24",
+      "type": "text/plain"
+    }
+  }
+}

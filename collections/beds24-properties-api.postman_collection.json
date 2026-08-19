@@ -1,0 +1,585 @@
+{
+  "item": [
+    {
+      "id": "a6d0d6d6-e718-45af-b592-5fd186972fd8",
+      "name": "Properties",
+      "description": {
+        "content": "Property and room configuration and bookable offers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bef3fc8d-6ec3-4557-9a32-d8e8dd3dd6e4",
+          "name": "Get properties",
+          "request": {
+            "name": "Get properties",
+            "description": {
+              "content": "Returns properties and their rooms matching the supplied criteria.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "properties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "Filter to one or more property ids."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "Filter to one or more property ids."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAllRooms",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTexts",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includePriceRules",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1c7821e-d431-44c1-8214-36f701e28a97",
+              "name": "A list of properties.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeAllRooms",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTexts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includePriceRules",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 8007,\n      \"name\": \"string\",\n      \"propertyType\": \"string\",\n      \"currency\": \"string\",\n      \"address\": \"string\",\n      \"city\": \"string\",\n      \"country\": \"string\",\n      \"roomTypes\": [\n        {\n          \"id\": 788,\n          \"name\": \"string\",\n          \"qty\": 7625,\n          \"maxPeople\": 1840,\n          \"minStay\": 451\n        },\n        {\n          \"id\": 2050,\n          \"name\": \"string\",\n          \"qty\": 8619,\n          \"maxPeople\": 775,\n          \"minStay\": 2700\n        }\n      ]\n    },\n    {\n      \"id\": 4696,\n      \"name\": \"string\",\n      \"propertyType\": \"string\",\n      \"currency\": \"string\",\n      \"address\": \"string\",\n      \"city\": \"string\",\n      \"country\": \"string\",\n      \"roomTypes\": [\n        {\n          \"id\": 7963,\n          \"name\": \"string\",\n          \"qty\": 6841,\n          \"maxPeople\": 2906,\n          \"minStay\": 2577\n        },\n        {\n          \"id\": 1636,\n          \"name\": \"string\",\n          \"qty\": 9004,\n          \"maxPeople\": 4068,\n          \"minStay\": 8828\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce4b937c-d72e-430c-aa7b-6225e4567df0",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeAllRooms",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTexts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includePriceRules",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58dd8cd4-95a3-47f5-8c5b-fdafedebfec8",
+          "name": "Create or modify properties",
+          "request": {
+            "name": "Create or modify properties",
+            "description": {
+              "content": "Creates or updates properties and rooms. Modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "properties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"propertyType\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"roomTypes\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"propertyType\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"roomTypes\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "23d06071-6afd-46af-9571-e9f1298abe66",
+              "name": "Property write results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"propertyType\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"roomTypes\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"propertyType\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"roomTypes\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"success\": false,\n    \"new\": {\n      \"key_0\": 5241\n    },\n    \"modified\": {\n      \"key_0\": 6488,\n      \"key_1\": 2537.8462254483525\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"success\": false,\n    \"new\": {\n      \"key_0\": 3065.043846373553\n    },\n    \"modified\": {\n      \"key_0\": 7630.945027276339,\n      \"key_1\": true\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b21c59a1-6a4e-4263-9c3b-adb0f5667cc0",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "properties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"propertyType\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"roomTypes\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"propertyType\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"roomTypes\": [\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"qty\": \"<integer>\",\n        \"maxPeople\": \"<integer>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d8c2eef-9877-4006-be3e-9faf7c0e04dd",
+          "name": "Get bookable offers",
+          "request": {
+            "name": "Get bookable offers",
+            "description": {
+              "content": "Returns bookable offers (available room/rate combinations) for a property over a date range, as used by a booking engine.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "properties",
+                "offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "propertyId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "arrival",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "departure",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "numAdult",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "numChild",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "12e05921-162b-4c19-81b8-48d30246db7d",
+              "name": "A list of bookable offers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "properties",
+                    "offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "arrival",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "departure",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "numAdult",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "numChild",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": [\n    {\n      \"roomId\": 4538,\n      \"name\": \"string\",\n      \"price\": 753.0812081077387,\n      \"available\": 3179,\n      \"arrival\": \"1998-06-30\",\n      \"departure\": \"1952-01-08\"\n    },\n    {\n      \"roomId\": 693,\n      \"name\": \"string\",\n      \"price\": 9829.36111440272,\n      \"available\": 9010,\n      \"arrival\": \"1972-10-19\",\n      \"departure\": \"2018-11-23\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a0addaf-1580-4be0-84cf-e19d741ed5f4",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "properties",
+                    "offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "arrival",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "departure",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "numAdult",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "numChild",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.beds24.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9ed34639-1462-486e-9a4e-007682db4405",
+    "name": "Beds24 API V2 Accounts Properties API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.\nBase URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the \"token\" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.\nThis document models the public V2 surface from Beds24's Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.\n\nContact Support:\n Name: Beds24",
+      "type": "text/plain"
+    }
+  }
+}

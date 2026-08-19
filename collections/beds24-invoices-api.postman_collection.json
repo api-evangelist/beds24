@@ -1,0 +1,342 @@
+{
+  "item": [
+    {
+      "id": "2c712088-9e45-4437-b7c3-d5a3de604835",
+      "name": "Invoices",
+      "description": {
+        "content": "Invoice items, charges, and payments attached to bookings.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9ba3c1bd-d1ab-49ae-895c-d8ed1bf902c4",
+          "name": "Get invoice items",
+          "request": {
+            "name": "Get invoice items",
+            "description": {
+              "content": "Returns invoice items, charges, and payments attached to bookings. Modeled - in the live V2 API invoice items are also returnable inline on the bookings resource via includeInvoiceItems.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bookings",
+                "invoiceitems"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bookingId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "81cbd0a5-d467-4a09-af7f-b400f34e8a0b",
+              "name": "A list of invoice items.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings",
+                    "invoiceitems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bookingId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 335,\n      \"bookingId\": 1330,\n      \"type\": \"charge\",\n      \"description\": \"string\",\n      \"qty\": 2575.9598790991454,\n      \"amount\": 3704.324122243612,\n      \"vatRate\": 2940.0519194739195,\n      \"lineTotal\": 9802.070568681926\n    },\n    {\n      \"id\": 3723,\n      \"bookingId\": 5658,\n      \"type\": \"charge\",\n      \"description\": \"string\",\n      \"qty\": 1712.0636801660016,\n      \"amount\": 5162.35670953846,\n      \"vatRate\": 9976.113960705905,\n      \"lineTotal\": 1240.1072914560773\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eca5a15a-5e14-4c32-9472-16604df471f3",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings",
+                    "invoiceitems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bookingId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d64c6c2-555b-4d31-81e6-27da0a304b97",
+          "name": "Create or modify invoice items",
+          "request": {
+            "name": "Create or modify invoice items",
+            "description": {
+              "content": "Writes invoice items (charges and payments) onto bookings. Modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bookings",
+                "invoiceitems"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"bookingId\": \"<integer>\",\n    \"type\": \"<string>\",\n    \"description\": \"<string>\",\n    \"qty\": \"<number>\",\n    \"amount\": \"<number>\",\n    \"vatRate\": \"<number>\",\n    \"lineTotal\": \"<number>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"bookingId\": \"<integer>\",\n    \"type\": \"<string>\",\n    \"description\": \"<string>\",\n    \"qty\": \"<number>\",\n    \"amount\": \"<number>\",\n    \"vatRate\": \"<number>\",\n    \"lineTotal\": \"<number>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2409ae0-8233-4852-b9b5-b987590164bb",
+              "name": "Invoice item write results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings",
+                    "invoiceitems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"bookingId\": \"<integer>\",\n    \"type\": \"<string>\",\n    \"description\": \"<string>\",\n    \"qty\": \"<number>\",\n    \"amount\": \"<number>\",\n    \"vatRate\": \"<number>\",\n    \"lineTotal\": \"<number>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"bookingId\": \"<integer>\",\n    \"type\": \"<string>\",\n    \"description\": \"<string>\",\n    \"qty\": \"<number>\",\n    \"amount\": \"<number>\",\n    \"vatRate\": \"<number>\",\n    \"lineTotal\": \"<number>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"success\": true,\n    \"new\": {\n      \"key_0\": 1080\n    },\n    \"modified\": {\n      \"key_0\": 1099.9441384822062,\n      \"key_1\": \"string\"\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"success\": false,\n    \"new\": {\n      \"key_0\": false,\n      \"key_1\": 6542,\n      \"key_2\": false\n    },\n    \"modified\": {\n      \"key_0\": \"string\",\n      \"key_1\": false\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3340f116-5bb5-4c05-95f1-129d9e672040",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings",
+                    "invoiceitems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"bookingId\": \"<integer>\",\n    \"type\": \"<string>\",\n    \"description\": \"<string>\",\n    \"qty\": \"<number>\",\n    \"amount\": \"<number>\",\n    \"vatRate\": \"<number>\",\n    \"lineTotal\": \"<number>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"bookingId\": \"<integer>\",\n    \"type\": \"<string>\",\n    \"description\": \"<string>\",\n    \"qty\": \"<number>\",\n    \"amount\": \"<number>\",\n    \"vatRate\": \"<number>\",\n    \"lineTotal\": \"<number>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.beds24.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "eecc6db9-dab6-4acc-91c9-f93acbf12689",
+    "name": "Beds24 API V2 Accounts Invoices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.\nBase URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the \"token\" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.\nThis document models the public V2 surface from Beds24's Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.\n\nContact Support:\n Name: Beds24",
+      "type": "text/plain"
+    }
+  }
+}

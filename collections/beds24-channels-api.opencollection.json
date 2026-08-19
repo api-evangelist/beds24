@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Beds24 API V2 Accounts Channels API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get channel connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/channels",
+            "params": [
+              {
+                "name": "propertyId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the OTA channel connections and their room/rate mappings for the account (Booking.com, Airbnb, Expedia, Vrbo, and others). Modeled."
+        },
+        {
+          "info": {
+            "name": "Update channel mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/channels",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates channel connection settings and room/rate mappings. Modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

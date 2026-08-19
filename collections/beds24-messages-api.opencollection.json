@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Beds24 API V2 Accounts Messages API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get booking messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/bookings/messages",
+            "params": [
+              {
+                "name": "bookingId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "maxAge",
+                "value": "",
+                "type": "query",
+                "description": "Only messages newer than N seconds."
+              }
+            ]
+          },
+          "docs": "Returns guest and channel messages for the specified bookings."
+        },
+        {
+          "info": {
+            "name": "Post booking messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/bookings/messages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Posts a guest or channel message to one or more bookings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1378 @@
+{
+  "item": [
+    {
+      "id": "a85efa57-2ce0-4910-83c6-086608d32c2f",
+      "name": "Inventory",
+      "description": {
+        "content": "Per-day availability calendar, availability status, and fixed prices.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "02bf64d6-22d8-489c-a9e7-ef3947af77f8",
+          "name": "Get per-day price and availability",
+          "request": {
+            "name": "Get per-day price and availability",
+            "description": {
+              "content": "Retrieves per-day price and availability for rooms in bulk (for example a year at a time) suitable for caching locally. Returns number of units available, min/max stay, prices, and open/close status per date.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "rooms",
+                "calendar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "roomId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "roomId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "includePrices",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeNumAvail",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeMinStay",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ccb55f2-d417-49f2-aa67-2ea43e2f9127",
+              "name": "Per-day calendar entries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "calendar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "includePrices",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeNumAvail",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMinStay",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"roomId\": 7585,\n      \"date\": \"1995-01-20\",\n      \"numAvail\": 3793,\n      \"price1\": 4310.276309774494,\n      \"minStay\": 3997,\n      \"maxStay\": 3749,\n      \"override\": \"string\"\n    },\n    {\n      \"roomId\": 6910,\n      \"date\": \"2018-10-17\",\n      \"numAvail\": 6872,\n      \"price1\": 7737.251123839333,\n      \"minStay\": 7138,\n      \"maxStay\": 5385,\n      \"override\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "102259dd-6f13-4601-bc17-b79aab79ad2c",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "calendar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "includePrices",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeNumAvail",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMinStay",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "436202d5-26b2-4289-9f31-24d22b3ecaf8",
+              "name": "The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "calendar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "includePrices",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeNumAvail",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMinStay",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Credits remaining in the current 5-minute period.",
+                  "key": "x-five-min-limit-remaining",
+                  "value": "6537"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds until the current period resets.",
+                  "key": "x-five-min-limit-resets-in",
+                  "value": "6537"
+                },
+                {
+                  "disabled": false,
+                  "description": "Credits this request cost.",
+                  "key": "x-request-cost",
+                  "value": "6537"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94794098-4a4f-42ab-88b5-d40f63bfde9e",
+          "name": "Update per-day price and availability",
+          "request": {
+            "name": "Update per-day price and availability",
+            "description": {
+              "content": "Updates prices and availability per room and date range - number of units available, min/max stay, and open/close status - which propagates to connected channels.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "rooms",
+                "calendar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"roomId\": \"<integer>\",\n    \"calendar\": [\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"roomId\": \"<integer>\",\n    \"calendar\": [\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "445c3140-176a-45ae-8074-2866e5fbb6b3",
+              "name": "Calendar write results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "calendar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"roomId\": \"<integer>\",\n    \"calendar\": [\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"roomId\": \"<integer>\",\n    \"calendar\": [\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"success\": false,\n    \"new\": {\n      \"key_0\": 1275.380180182839\n    },\n    \"modified\": {\n      \"key_0\": false,\n      \"key_1\": 296,\n      \"key_2\": 99,\n      \"key_3\": false\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"success\": true,\n    \"new\": {\n      \"key_0\": \"string\"\n    },\n    \"modified\": {\n      \"key_0\": false\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b6b5ccd-fbfd-453f-8236-6dedd3d99222",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "calendar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"roomId\": \"<integer>\",\n    \"calendar\": [\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"roomId\": \"<integer>\",\n    \"calendar\": [\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48f8788d-0af4-404c-a5bb-65f8e4975773",
+              "name": "The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "calendar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"roomId\": \"<integer>\",\n    \"calendar\": [\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  },\n  {\n    \"roomId\": \"<integer>\",\n    \"calendar\": [\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      },\n      {\n        \"from\": \"<date>\",\n        \"to\": \"<date>\",\n        \"numAvail\": \"<integer>\",\n        \"price1\": \"<number>\",\n        \"minStay\": \"<integer>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Credits remaining in the current 5-minute period.",
+                  "key": "x-five-min-limit-remaining",
+                  "value": "6537"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds until the current period resets.",
+                  "key": "x-five-min-limit-resets-in",
+                  "value": "6537"
+                },
+                {
+                  "disabled": false,
+                  "description": "Credits this request cost.",
+                  "key": "x-request-cost",
+                  "value": "6537"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5cc718a6-9be0-45e2-a1d1-f8ccf117964d",
+          "name": "Get availability status of dates",
+          "request": {
+            "name": "Get availability status of dates",
+            "description": {
+              "content": "Returns whether dates are available or not for the specified rooms.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "rooms",
+                "availability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "roomId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "roomId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f0cb1dc-c38a-48a5-ac7c-1923e307c5fb",
+              "name": "Availability status per date.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"data\": [\n    {\n      \"roomId\": 9452,\n      \"date\": \"1960-12-24\",\n      \"available\": true,\n      \"numAvail\": 5003\n    },\n    {\n      \"roomId\": 3897,\n      \"date\": \"1995-11-14\",\n      \"available\": false,\n      \"numAvail\": 8728\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "018f1298-c372-45d3-875f-c295b0625f07",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a2a2230-8d83-4caa-9094-9a5720a66de5",
+          "name": "Update availability of dates",
+          "request": {
+            "name": "Update availability of dates",
+            "description": {
+              "content": "Sets availability (open/close and number of units) for rooms and dates. Modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "rooms",
+                "availability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"roomId\": \"<integer>\",\n    \"date\": \"<date>\",\n    \"available\": \"<boolean>\",\n    \"numAvail\": \"<integer>\"\n  },\n  {\n    \"roomId\": \"<integer>\",\n    \"date\": \"<date>\",\n    \"available\": \"<boolean>\",\n    \"numAvail\": \"<integer>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8bfef494-a64c-45bf-8e28-d217cefb9c04",
+              "name": "Availability write results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"roomId\": \"<integer>\",\n    \"date\": \"<date>\",\n    \"available\": \"<boolean>\",\n    \"numAvail\": \"<integer>\"\n  },\n  {\n    \"roomId\": \"<integer>\",\n    \"date\": \"<date>\",\n    \"available\": \"<boolean>\",\n    \"numAvail\": \"<integer>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"success\": true,\n    \"new\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"modified\": {\n      \"key_0\": 236.54978694007346,\n      \"key_1\": \"string\",\n      \"key_2\": 3259\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"success\": false,\n    \"new\": {\n      \"key_0\": true\n    },\n    \"modified\": {\n      \"key_0\": true,\n      \"key_1\": 2628.012495825839,\n      \"key_2\": \"string\"\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30beebc6-f758-4fc8-94ab-1e0d05a0a6d2",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "rooms",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"roomId\": \"<integer>\",\n    \"date\": \"<date>\",\n    \"available\": \"<boolean>\",\n    \"numAvail\": \"<integer>\"\n  },\n  {\n    \"roomId\": \"<integer>\",\n    \"date\": \"<date>\",\n    \"available\": \"<boolean>\",\n    \"numAvail\": \"<integer>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03a3aa52-ab55-43b4-88b9-0182025050cb",
+          "name": "Get fixed prices",
+          "request": {
+            "name": "Get fixed prices",
+            "description": {
+              "content": "Returns the fixed price rules and rate plans configured for rooms.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "fixedPrices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "propertyId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "roomId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7c3ca55-ebc6-4bfb-a236-7dba1c6b9abe",
+              "name": "A list of fixed prices.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "fixedPrices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 5093,\n      \"propertyId\": 7271,\n      \"roomId\": 6890,\n      \"name\": \"string\",\n      \"firstNight\": \"1957-02-25\",\n      \"lastNight\": \"1950-06-10\",\n      \"minNights\": 6080,\n      \"maxNights\": 2015,\n      \"roomPrice\": 4086.82351013687\n    },\n    {\n      \"id\": 9871,\n      \"propertyId\": 3105,\n      \"roomId\": 77,\n      \"name\": \"string\",\n      \"firstNight\": \"1956-05-15\",\n      \"lastNight\": \"1953-10-11\",\n      \"minNights\": 2532,\n      \"maxNights\": 6985,\n      \"roomPrice\": 4356.223386677889\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77287718-f32d-4735-8cdf-6567673f45cd",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "fixedPrices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc176d73-61a4-44e4-b6d0-53b44bd84737",
+          "name": "Create or modify fixed prices",
+          "request": {
+            "name": "Create or modify fixed prices",
+            "description": {
+              "content": "Creates or updates fixed price rules and rate plans.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "fixedPrices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"firstNight\": \"<date>\",\n    \"lastNight\": \"<date>\",\n    \"minNights\": \"<integer>\",\n    \"maxNights\": \"<integer>\",\n    \"roomPrice\": \"<number>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"firstNight\": \"<date>\",\n    \"lastNight\": \"<date>\",\n    \"minNights\": \"<integer>\",\n    \"maxNights\": \"<integer>\",\n    \"roomPrice\": \"<number>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "26750180-5cba-48dd-9eda-a1eda5d4c301",
+              "name": "Fixed price write results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "fixedPrices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"firstNight\": \"<date>\",\n    \"lastNight\": \"<date>\",\n    \"minNights\": \"<integer>\",\n    \"maxNights\": \"<integer>\",\n    \"roomPrice\": \"<number>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"firstNight\": \"<date>\",\n    \"lastNight\": \"<date>\",\n    \"minNights\": \"<integer>\",\n    \"maxNights\": \"<integer>\",\n    \"roomPrice\": \"<number>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"success\": true,\n    \"new\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"modified\": {\n      \"key_0\": 236.54978694007346,\n      \"key_1\": \"string\",\n      \"key_2\": 3259\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"success\": false,\n    \"new\": {\n      \"key_0\": true\n    },\n    \"modified\": {\n      \"key_0\": true,\n      \"key_1\": 2628.012495825839,\n      \"key_2\": \"string\"\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d864b61-dda4-4034-94ca-c26fecd38221",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "fixedPrices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"firstNight\": \"<date>\",\n    \"lastNight\": \"<date>\",\n    \"minNights\": \"<integer>\",\n    \"maxNights\": \"<integer>\",\n    \"roomPrice\": \"<number>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"firstNight\": \"<date>\",\n    \"lastNight\": \"<date>\",\n    \"minNights\": \"<integer>\",\n    \"maxNights\": \"<integer>\",\n    \"roomPrice\": \"<number>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8da656b9-5357-493e-8d76-d1dd5e9531fb",
+          "name": "Delete fixed prices",
+          "request": {
+            "name": "Delete fixed prices",
+            "description": {
+              "content": "Deletes fixed price rules by id. Modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "fixedPrices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7bafc6b7-111b-4098-9a5b-5c910022ce99",
+              "name": "Delete result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "fixedPrices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"new\": {\n    \"key_0\": 9878,\n    \"key_1\": \"string\"\n  },\n  \"modified\": {\n    \"key_0\": true\n  },\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5748c0d5-c99d-45e1-93f3-63057a7c8dc9",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "fixedPrices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.beds24.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "811c69e6-10fa-4176-898d-f2b10362bd98",
+    "name": "Beds24 API V2 Accounts Inventory API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.\nBase URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the \"token\" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.\nThis document models the public V2 surface from Beds24's Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.\n\nContact Support:\n Name: Beds24",
+      "type": "text/plain"
+    }
+  }
+}

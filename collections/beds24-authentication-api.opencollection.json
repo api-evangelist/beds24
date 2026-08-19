@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Beds24 API V2 Accounts Authentication API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a refresh token from an invite code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/authentication/setup",
+            "headers": [
+              {
+                "name": "code",
+                "value": ""
+              },
+              {
+                "name": "deviceName",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Exchanges an invite code (created in SETTINGS > ACCOUNT > ACCESS) for a refresh token and an initial access token, with the requested scopes."
+        },
+        {
+          "info": {
+            "name": "Get an access token from a refresh token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/authentication/token",
+            "headers": [
+              {
+                "name": "refreshToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Generates a short-lived access token from a long-life refresh token."
+        },
+        {
+          "info": {
+            "name": "Revoke the current token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.beds24.com/v2/authentication/token"
+          },
+          "docs": "Invalidates the refresh token used to authenticate this request."
+        },
+        {
+          "info": {
+            "name": "Get token diagnostics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/authentication/details"
+          },
+          "docs": "Returns diagnostics about the current token, including scopes and validity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

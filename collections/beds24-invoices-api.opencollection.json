@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Beds24 API V2 Accounts Invoices API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get invoice items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.beds24.com/v2/bookings/invoiceitems",
+            "params": [
+              {
+                "name": "bookingId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns invoice items, charges, and payments attached to bookings. Modeled - in the live V2 API invoice items are also returnable inline on the bookings resource via includeInvoiceItems."
+        },
+        {
+          "info": {
+            "name": "Create or modify invoice items",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.beds24.com/v2/bookings/invoiceitems",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Writes invoice items (charges and payments) onto bookings. Modeled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

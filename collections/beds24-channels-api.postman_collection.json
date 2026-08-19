@@ -1,0 +1,336 @@
+{
+  "item": [
+    {
+      "id": "2476ba2f-77d7-43af-b45b-1d4b95b730e1",
+      "name": "Channels",
+      "description": {
+        "content": "OTA channel connection and mapping management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ca3cdea8-e4cd-4514-945a-92404f4350ed",
+          "name": "Get channel connections",
+          "request": {
+            "name": "Get channel connections",
+            "description": {
+              "content": "Returns the OTA channel connections and their room/rate mappings for the account (Booking.com, Airbnb, Expedia, Vrbo, and others). Modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "propertyId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4c3ce976-84fc-497f-b5d2-5047ad7bcd9a",
+              "name": "A list of channel connections.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 3844,\n      \"propertyId\": 6059,\n      \"channel\": \"string\",\n      \"connected\": true,\n      \"mappings\": [\n        {\n          \"roomId\": 7495,\n          \"externalRoomId\": \"string\",\n          \"externalRateId\": \"string\"\n        },\n        {\n          \"roomId\": 9032,\n          \"externalRoomId\": \"string\",\n          \"externalRateId\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": 5045,\n      \"propertyId\": 5570,\n      \"channel\": \"string\",\n      \"connected\": false,\n      \"mappings\": [\n        {\n          \"roomId\": 8007,\n          \"externalRoomId\": \"string\",\n          \"externalRateId\": \"string\"\n        },\n        {\n          \"roomId\": 8054,\n          \"externalRoomId\": \"string\",\n          \"externalRateId\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03b2e720-5b04-4598-bf8d-0dc6b302d27d",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b66e2c2-c890-41e1-880e-1753fe0dfdf8",
+          "name": "Update channel mappings",
+          "request": {
+            "name": "Update channel mappings",
+            "description": {
+              "content": "Updates channel connection settings and room/rate mappings. Modeled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"channel\": \"<string>\",\n    \"connected\": \"<boolean>\",\n    \"mappings\": [\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      },\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"channel\": \"<string>\",\n    \"connected\": \"<boolean>\",\n    \"mappings\": [\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      },\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d306138-3867-4893-8cbb-26c4af132e52",
+              "name": "Channel write results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"channel\": \"<string>\",\n    \"connected\": \"<boolean>\",\n    \"mappings\": [\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      },\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"channel\": \"<string>\",\n    \"connected\": \"<boolean>\",\n    \"mappings\": [\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      },\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"success\": true,\n    \"new\": {\n      \"key_0\": 3000.764525677272\n    },\n    \"modified\": {\n      \"key_0\": \"string\",\n      \"key_1\": 4253.506278445488\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"success\": true,\n    \"new\": {\n      \"key_0\": 6654,\n      \"key_1\": true,\n      \"key_2\": 5551.033209842183\n    },\n    \"modified\": {\n      \"key_0\": true,\n      \"key_1\": false\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f472435-c8a4-48c6-ac6d-631f7a03c337",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"channel\": \"<string>\",\n    \"connected\": \"<boolean>\",\n    \"mappings\": [\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      },\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"propertyId\": \"<integer>\",\n    \"channel\": \"<string>\",\n    \"connected\": \"<boolean>\",\n    \"mappings\": [\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      },\n      {\n        \"roomId\": \"<integer>\",\n        \"externalRoomId\": \"<string>\",\n        \"externalRateId\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.beds24.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4871aca3-f419-4b8a-8cf5-84af255e7bcd",
+    "name": "Beds24 API V2 Accounts Channels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.\nBase URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the \"token\" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.\nThis document models the public V2 surface from Beds24's Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.\n\nContact Support:\n Name: Beds24",
+      "type": "text/plain"
+    }
+  }
+}

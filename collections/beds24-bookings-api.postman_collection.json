@@ -1,0 +1,642 @@
+{
+  "item": [
+    {
+      "id": "16546cf5-3d16-48af-8ea2-7e496cc88c56",
+      "name": "Bookings",
+      "description": {
+        "content": "Read, create, and modify reservations across all channels.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "211907a7-e093-49c8-9f62-834b272302de",
+          "name": "Get bookings",
+          "request": {
+            "name": "Get bookings",
+            "description": {
+              "content": "Returns bookings matching the supplied filters. Filter by property, room, arrival/departure window, status, and modification time. Supports paging.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bookings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "propertyId",
+                  "value": "<integer>",
+                  "description": "Filter to a property."
+                },
+                {
+                  "disabled": false,
+                  "key": "roomId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "arrivalFrom",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "arrivalTo",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "departureFrom",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "departureTo",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "modifiedFrom",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeInvoiceItems",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeInfoItems",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db4dca37-a8f9-45d0-aec3-fa239ff6e8b4",
+              "name": "A page of bookings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "arrivalFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "arrivalTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "departureFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "departureTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modifiedFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeInvoiceItems",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeInfoItems",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"type\": \"string\",\n  \"count\": 1308,\n  \"pages\": 2578,\n  \"data\": [\n    {\n      \"id\": 4646,\n      \"propertyId\": 2054,\n      \"roomId\": 81,\n      \"unitId\": 1986,\n      \"status\": \"string\",\n      \"arrival\": \"1968-10-04\",\n      \"departure\": \"1975-03-07\",\n      \"numAdult\": 6506,\n      \"numChild\": 4270,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"price\": 8783.686249480113,\n      \"referer\": \"string\",\n      \"apiSource\": \"string\",\n      \"bookingTime\": \"1978-07-30T13:02:25.014Z\",\n      \"modifiedTime\": \"1989-01-19T01:28:09.940Z\",\n      \"invoiceItems\": [\n        {\n          \"id\": 5466,\n          \"bookingId\": 612,\n          \"type\": \"payment\",\n          \"description\": \"string\",\n          \"qty\": 9581.693578659795,\n          \"amount\": 7944.899333837015,\n          \"vatRate\": 3890.5956330757217,\n          \"lineTotal\": 3177.0588595188187\n        },\n        {\n          \"id\": 7139,\n          \"bookingId\": 1909,\n          \"type\": \"charge\",\n          \"description\": \"string\",\n          \"qty\": 2328.330419362078,\n          \"amount\": 3150.0970860239554,\n          \"vatRate\": 7191.6402037797,\n          \"lineTotal\": 6397.071173985753\n        }\n      ],\n      \"infoItems\": [\n        {\n          \"key_0\": \"string\",\n          \"key_1\": 1987.3555236307584\n        },\n        {\n          \"key_0\": 7119\n        }\n      ]\n    },\n    {\n      \"id\": 8856,\n      \"propertyId\": 2091,\n      \"roomId\": 6676,\n      \"unitId\": 6666,\n      \"status\": \"string\",\n      \"arrival\": \"2017-06-10\",\n      \"departure\": \"2017-08-14\",\n      \"numAdult\": 1242,\n      \"numChild\": 5791,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"email\": \"string\",\n      \"price\": 1651.4764345551002,\n      \"referer\": \"string\",\n      \"apiSource\": \"string\",\n      \"bookingTime\": \"1993-04-18T20:08:24.151Z\",\n      \"modifiedTime\": \"2025-01-04T11:41:30.535Z\",\n      \"invoiceItems\": [\n        {\n          \"id\": 8994,\n          \"bookingId\": 1563,\n          \"type\": \"charge\",\n          \"description\": \"string\",\n          \"qty\": 1390.099629835294,\n          \"amount\": 8508.382444199704,\n          \"vatRate\": 5286.241685896833,\n          \"lineTotal\": 5350.227799284137\n        },\n        {\n          \"id\": 5106,\n          \"bookingId\": 4862,\n          \"type\": \"payment\",\n          \"description\": \"string\",\n          \"qty\": 7928.188242078373,\n          \"amount\": 7956.353711607818,\n          \"vatRate\": 4828.735797702799,\n          \"lineTotal\": 1415.0951983349746\n        }\n      ],\n      \"infoItems\": [\n        {\n          \"key_0\": \"string\",\n          \"key_1\": 636\n        },\n        {\n          \"key_0\": 2703.02187418508\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9817f70d-8150-4901-8c34-90032aab71b5",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "arrivalFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "arrivalTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "departureFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "departureTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modifiedFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeInvoiceItems",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeInfoItems",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "953a053d-59c6-4693-a9a2-73c5ecf00117",
+              "name": "The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "propertyId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "roomId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "arrivalFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "arrivalTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "departureFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "departureTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modifiedFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeInvoiceItems",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeInfoItems",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Credits remaining in the current 5-minute period.",
+                  "key": "x-five-min-limit-remaining",
+                  "value": "4600"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds until the current period resets.",
+                  "key": "x-five-min-limit-resets-in",
+                  "value": "4600"
+                },
+                {
+                  "disabled": false,
+                  "description": "Credits this request cost.",
+                  "key": "x-request-cost",
+                  "value": "4600"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f99da5c5-9f86-49a3-9952-a1bdbeb17fed",
+          "name": "Create or modify bookings",
+          "request": {
+            "name": "Create or modify bookings",
+            "description": {
+              "content": "Creates new bookings or modifies existing ones (when an id is supplied). Accepts an array so multiple bookings can be written in one request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bookings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"arrival\": \"<date>\",\n    \"departure\": \"<date>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"numAdult\": \"<integer>\",\n    \"invoiceItems\": [\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"arrival\": \"<date>\",\n    \"departure\": \"<date>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"numAdult\": \"<integer>\",\n    \"invoiceItems\": [\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fdbd12fb-f2a2-48bf-827e-9feb5e8e3ade",
+              "name": "Write results per booking.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"arrival\": \"<date>\",\n    \"departure\": \"<date>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"numAdult\": \"<integer>\",\n    \"invoiceItems\": [\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"arrival\": \"<date>\",\n    \"departure\": \"<date>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"numAdult\": \"<integer>\",\n    \"invoiceItems\": [\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"success\": true,\n    \"id\": 5100,\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"success\": false,\n    \"id\": 7614,\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c73ae8c6-cc81-41ca-ad34-3ddd72c20ce5",
+              "name": "The token is missing, invalid, expired, or lacks the required scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"arrival\": \"<date>\",\n    \"departure\": \"<date>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"numAdult\": \"<integer>\",\n    \"invoiceItems\": [\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"arrival\": \"<date>\",\n    \"departure\": \"<date>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"numAdult\": \"<integer>\",\n    \"invoiceItems\": [\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52df8b06-dfa9-473c-81dd-5b5edf70269e",
+              "name": "The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bookings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"arrival\": \"<date>\",\n    \"departure\": \"<date>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"numAdult\": \"<integer>\",\n    \"invoiceItems\": [\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"status\": \"<string>\",\n    \"arrival\": \"<date>\",\n    \"departure\": \"<date>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"numAdult\": \"<integer>\",\n    \"invoiceItems\": [\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"bookingId\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\",\n        \"qty\": \"<number>\",\n        \"amount\": \"<number>\",\n        \"vatRate\": \"<number>\",\n        \"lineTotal\": \"<number>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Credits remaining in the current 5-minute period.",
+                  "key": "x-five-min-limit-remaining",
+                  "value": "4600"
+                },
+                {
+                  "disabled": false,
+                  "description": "Seconds until the current period resets.",
+                  "key": "x-five-min-limit-resets-in",
+                  "value": "4600"
+                },
+                {
+                  "disabled": false,
+                  "description": "Credits this request cost.",
+                  "key": "x-request-cost",
+                  "value": "4600"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"code\": 401,\n  \"error\": \"Token is missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.beds24.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b640d536-22ab-43eb-9f9d-33bcf9900172",
+    "name": "Beds24 API V2 Accounts Bookings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.\nBase URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the \"token\" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.\nThis document models the public V2 surface from Beds24's Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.\n\nContact Support:\n Name: Beds24",
+      "type": "text/plain"
+    }
+  }
+}
