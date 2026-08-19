@@ -35,7 +35,7 @@ tags:
 - Reservations
 created: '2026-07-03'
 modified: '2026-07-03'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: beds24:beds24-accounts-api
   name: Beds24 Accounts API
