@@ -43,6 +43,8 @@ apis:
   humanURL: https://wiki.beds24.com/index.php/Category:API_V2
   baseURL: https://api.beds24.com/v2
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -163,6 +165,8 @@ apis:
   humanURL: https://wiki.beds24.com/index.php/Category:API_V2
   baseURL: https://api.beds24.com/v2
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
