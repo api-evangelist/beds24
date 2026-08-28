@@ -11,6 +11,18 @@ description: Beds24 is a vacation rental and hotel channel manager, property man
   access tokens generated from refresh tokens, scoped permissions, optional IP
   whitelisting, and a credit-based rate limit enforced per account over a rolling
   5-minute window.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
