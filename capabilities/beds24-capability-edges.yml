@@ -1,0 +1,46 @@
+slug: beds24
+provider: Beds24
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Travel & Hospitality
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Channels
+  spec_file: beds24-channels-api-openapi.yml
+  capability_id: BC-4010.50
+  capability_id_l1: BC-4010
+  capability_name: Channel Manager Operations
+  confidence: 0.85
+  evidence: GET /channels Get channel connections; POST /channels Update channel mappings — Beds24 "synchronizes
+    availability, rates, and reservations across OTAs such as Booking.com, Airbnb, Expedia"
+  reason: Manages OTA channel connections and mappings for a channel manager — the channel-manager hub
+    operation that synchronises content/inventory across distribution channels.
+- tag: Bookings
+  spec_file: beds24-bookings-api-openapi.yml
+  capability_id: BC-4020.10
+  capability_id_l1: BC-4020
+  capability_name: Reservation Capture
+  confidence: 0.8
+  evidence: GET /bookings getBookings Get bookings; POST /bookings postBookings Create or modify bookings
+  reason: 'Reservation lifecycle for a hotel/vacation-rental PMS: creating, reading and modifying bookings.
+    Clearly Reservation & Booking Management; capture is the primary operation though modification is
+    also covered, hence some sub-capability ambiguity.'
+- tag: Properties
+  spec_file: beds24-properties-api-openapi.yml
+  capability_id: BC-4000.10
+  capability_id_l1: BC-4000
+  capability_name: Lodging Product Management
+  confidence: 0.8
+  evidence: 'GET /properties  getProperties; POST /properties  Create or modify properties; GET /properties/offers  getPropertyOffers  Get
+    bookable offers; schemas: Property, Room, Offer'
+  reason: Creating and modifying property records with Room and Offer schemas in a hotel/vacation-rental
+    PMS is definition of the bookable accommodation product — room types and bookable offers — which is
+    Lodging Product Management.

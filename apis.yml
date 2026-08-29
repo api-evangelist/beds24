@@ -214,6 +214,9 @@ apis:
   - type: Documentation
     url: https://wiki.beds24.com/index.php/OTAs:_How_to_connect_to_Beds24_using_API_V2
 common:
+- type: CapabilityMap
+  url: capabilities/beds24-capability-edges.yml
+  name: Beds24 Business Capability Map
 - type: AgenticAccess
   url: agentic-access/beds24-agentic-access.yml
 - type: DomainSecurity
