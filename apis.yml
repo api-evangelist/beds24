@@ -38,6 +38,14 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/beds24.png
 tags:
+- Vacation Rentals
+- Hotels
+- Channel Manager
+- Property Management System
+- Booking Engine
+- Hospitality
+- Reservations
+tags_raw:
 - Vacation Rental
 - Hotel
 - Channel Manager
@@ -97,6 +105,8 @@ apis:
   humanURL: https://wiki.beds24.com/index.php/Category:API_V2
   baseURL: https://api.beds24.com/v2
   tags:
+  - Booking
+  tags_raw:
   - Bookings
   properties:
   - type: OpenAPI
