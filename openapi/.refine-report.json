@@ -1,14 +1,7 @@
 {
   "provider": "beds24",
   "sources": [
-    "beds24-accounts-api-openapi.yml",
-    "beds24-authentication-api-openapi.yml",
-    "beds24-bookings-api-openapi.yml",
-    "beds24-channels-api-openapi.yml",
-    "beds24-inventory-api-openapi.yml",
-    "beds24-invoices-api-openapi.yml",
-    "beds24-messages-api-openapi.yml",
-    "beds24-properties-api-openapi.yml"
+    "_original/beds24-openapi.yml"
   ],
   "outputs": [
     "beds24-accounts-api-openapi.yml",
@@ -23,6 +16,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "beds24-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "beds24-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "beds24-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "beds24-bookings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "beds24-channels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "beds24-inventory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "beds24-invoices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "beds24-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "beds24-properties-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,11 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Beds24 API V2 Accounts Bookings API
-  description: 'The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings. Beds24 is a vacation rental and hotel channel manager, property management system, and booking engine.
-
-    Base URL is https://api.beds24.com/v2. Authentication uses expiring access tokens that are generated from a refresh token (or a read-only long-life token) obtained via the /authentication endpoints; the token is sent in the "token" request header. Every category except /authentication requires a matching scope. Usage is governed by an account-level credit limit over a rolling 5-minute window, reported via the x-five-min-limit-remaining, x-five-min-limit-resets-in, and x-request-cost response headers.
-
-    This document models the public V2 surface from Beds24''s Swagger UI (https://api.beds24.com/v2/) and wiki. Endpoint shapes marked as modeled are grounded in the published documentation but were not byte-verified against the live Swagger JSON, which requires an authenticated token to retrieve.'
+  title: Beds24 API V2 Bookings API
+  description: The Beds24 API V2 lets you read, create, and alter data across almost all aspects of a Beds24 account, including properties, room inventory, bookings, prices, invoices, channels, and account settings.
   version: '2.0'
   contact:
     name: Beds24
@@ -141,56 +137,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    Booking:
-      type: object
-      properties:
-        id:
-          type: integer
-        propertyId:
-          type: integer
-        roomId:
-          type: integer
-        unitId:
-          type: integer
-        status:
-          type: string
-        arrival:
-          type: string
-          format: date
-        departure:
-          type: string
-          format: date
-        numAdult:
-          type: integer
-        numChild:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        price:
-          type: number
-        referer:
-          type: string
-        apiSource:
-          type: string
-        bookingTime:
-          type: string
-          format: date-time
-        modifiedTime:
-          type: string
-          format: date-time
-        invoiceItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvoiceItem'
-        infoItems:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
     BookingWriteResult:
       type: object
       properties:
@@ -202,18 +148,6 @@ components:
           type: array
           items:
             type: string
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        code:
-          type: integer
-          example: 401
-        error:
-          type: string
-          example: Token is missing
     BookingWrite:
       type: object
       properties:
@@ -264,6 +198,68 @@ components:
           type: number
         lineTotal:
           type: number
+    Booking:
+      type: object
+      properties:
+        id:
+          type: integer
+        propertyId:
+          type: integer
+        roomId:
+          type: integer
+        unitId:
+          type: integer
+        status:
+          type: string
+        arrival:
+          type: string
+          format: date
+        departure:
+          type: string
+          format: date
+        numAdult:
+          type: integer
+        numChild:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        price:
+          type: number
+        referer:
+          type: string
+        apiSource:
+          type: string
+        bookingTime:
+          type: string
+          format: date-time
+        modifiedTime:
+          type: string
+          format: date-time
+        invoiceItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem'
+        infoItems:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
   responses:
     Unauthorized:
       description: The token is missing, invalid, expired, or lacks the required scope.
