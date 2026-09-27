@@ -252,6 +252,40 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    CalendarWrite:
+      type: object
+      properties:
+        roomId:
+          type: integer
+        calendar:
+          type: array
+          items:
+            type: object
+            properties:
+              from:
+                type: string
+                format: date
+              to:
+                type: string
+                format: date
+              numAvail:
+                type: integer
+              price1:
+                type: number
+              minStay:
+                type: integer
+    AvailabilityDay:
+      type: object
+      properties:
+        roomId:
+          type: integer
+        date:
+          type: string
+          format: date
+        available:
+          type: boolean
+        numAvail:
+          type: integer
     FixedPrice:
       type: object
       properties:
@@ -275,40 +309,6 @@ components:
           type: integer
         roomPrice:
           type: number
-    AvailabilityDay:
-      type: object
-      properties:
-        roomId:
-          type: integer
-        date:
-          type: string
-          format: date
-        available:
-          type: boolean
-        numAvail:
-          type: integer
-    CalendarWrite:
-      type: object
-      properties:
-        roomId:
-          type: integer
-        calendar:
-          type: array
-          items:
-            type: object
-            properties:
-              from:
-                type: string
-                format: date
-              to:
-                type: string
-                format: date
-              numAvail:
-                type: integer
-              price1:
-                type: number
-              minStay:
-                type: integer
     Error:
       type: object
       properties:

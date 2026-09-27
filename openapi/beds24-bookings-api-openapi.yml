@@ -137,17 +137,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    BookingWriteResult:
-      type: object
-      properties:
-        success:
-          type: boolean
-        id:
-          type: integer
-        warnings:
-          type: array
-          items:
-            type: string
     BookingWrite:
       type: object
       properties:
@@ -176,28 +165,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceItem'
-    InvoiceItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        bookingId:
-          type: integer
-        type:
-          type: string
-          enum:
-          - charge
-          - payment
-        description:
-          type: string
-        qty:
-          type: number
-        amount:
-          type: number
-        vatRate:
-          type: number
-        lineTotal:
-          type: number
     Booking:
       type: object
       properties:
@@ -248,6 +215,28 @@ components:
           items:
             type: object
             additionalProperties: true
+    InvoiceItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        bookingId:
+          type: integer
+        type:
+          type: string
+          enum:
+          - charge
+          - payment
+        description:
+          type: string
+        qty:
+          type: number
+        amount:
+          type: number
+        vatRate:
+          type: number
+        lineTotal:
+          type: number
     Error:
       type: object
       properties:
@@ -260,6 +249,17 @@ components:
         error:
           type: string
           example: Token is missing
+    BookingWriteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: integer
+        warnings:
+          type: array
+          items:
+            type: string
   responses:
     Unauthorized:
       description: The token is missing, invalid, expired, or lacks the required scope.

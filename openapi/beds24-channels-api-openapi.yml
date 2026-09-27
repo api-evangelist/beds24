@@ -73,18 +73,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        code:
-          type: integer
-          example: 401
-        error:
-          type: string
-          example: Token is missing
     Channel:
       type: object
       properties:
@@ -111,6 +99,18 @@ components:
                 type: string
               externalRateId:
                 type: string
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
     Success:
       type: object
       properties:

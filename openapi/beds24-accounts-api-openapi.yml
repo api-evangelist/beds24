@@ -43,18 +43,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        code:
-          type: integer
-          example: 401
-        error:
-          type: string
-          example: Token is missing
     Account:
       type: object
       properties:
@@ -71,6 +59,18 @@ components:
           items:
             type: object
             additionalProperties: true
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
   responses:
     Unauthorized:
       description: The token is missing, invalid, expired, or lacks the required scope.

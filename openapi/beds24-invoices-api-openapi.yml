@@ -85,21 +85,6 @@ components:
         error:
           type: string
           example: Token is missing
-    Success:
-      type: object
-      properties:
-        success:
-          type: boolean
-        new:
-          type: object
-          additionalProperties: true
-        modified:
-          type: object
-          additionalProperties: true
-        warnings:
-          type: array
-          items:
-            type: string
     InvoiceItem:
       type: object
       properties:
@@ -122,6 +107,21 @@ components:
           type: number
         lineTotal:
           type: number
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+        new:
+          type: object
+          additionalProperties: true
+        modified:
+          type: object
+          additionalProperties: true
+        warnings:
+          type: array
+          items:
+            type: string
   responses:
     Unauthorized:
       description: The token is missing, invalid, expired, or lacks the required scope.
