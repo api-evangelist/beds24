@@ -137,34 +137,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    BookingWrite:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Supply to modify an existing booking; omit to create.
-        roomId:
-          type: integer
-        status:
-          type: string
-        arrival:
-          type: string
-          format: date
-        departure:
-          type: string
-          format: date
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        numAdult:
-          type: integer
-        invoiceItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/InvoiceItem'
     Booking:
       type: object
       properties:
@@ -215,6 +187,45 @@ components:
           items:
             type: object
             additionalProperties: true
+    BookingWriteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: integer
+        warnings:
+          type: array
+          items:
+            type: string
+    BookingWrite:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Supply to modify an existing booking; omit to create.
+        roomId:
+          type: integer
+        status:
+          type: string
+        arrival:
+          type: string
+          format: date
+        departure:
+          type: string
+          format: date
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        numAdult:
+          type: integer
+        invoiceItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem'
     InvoiceItem:
       type: object
       properties:
@@ -249,17 +260,6 @@ components:
         error:
           type: string
           example: Token is missing
-    BookingWriteResult:
-      type: object
-      properties:
-        success:
-          type: boolean
-        id:
-          type: integer
-        warnings:
-          type: array
-          items:
-            type: string
   responses:
     Unauthorized:
       description: The token is missing, invalid, expired, or lacks the required scope.

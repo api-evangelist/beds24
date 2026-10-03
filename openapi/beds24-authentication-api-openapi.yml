@@ -101,6 +101,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+        expiresIn:
+          type: integer
     AuthenticationDetails:
       type: object
       properties:
@@ -124,18 +131,6 @@ components:
           type: integer
         refreshToken:
           type: string
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        code:
-          type: integer
-          example: 401
-        error:
-          type: string
-          example: Token is missing
     Success:
       type: object
       properties:
@@ -151,13 +146,18 @@ components:
           type: array
           items:
             type: string
-    Token:
+    Error:
       type: object
       properties:
-        token:
-          type: string
-        expiresIn:
+        success:
+          type: boolean
+          example: false
+        code:
           type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
   responses:
     Unauthorized:
       description: The token is missing, invalid, expired, or lacks the required scope.

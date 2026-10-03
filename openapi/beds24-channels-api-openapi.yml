@@ -99,18 +99,6 @@ components:
                 type: string
               externalRateId:
                 type: string
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        code:
-          type: integer
-          example: 401
-        error:
-          type: string
-          example: Token is missing
     Success:
       type: object
       properties:
@@ -126,6 +114,18 @@ components:
           type: array
           items:
             type: string
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
   responses:
     Unauthorized:
       description: The token is missing, invalid, expired, or lacks the required scope.

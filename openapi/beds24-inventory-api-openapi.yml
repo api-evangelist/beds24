@@ -251,7 +251,74 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: The token is missing, invalid, expired, or lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.
+      headers:
+        x-five-min-limit-remaining:
+          schema:
+            type: integer
+          description: Credits remaining in the current 5-minute period.
+        x-five-min-limit-resets-in:
+          schema:
+            type: integer
+          description: Seconds until the current period resets.
+        x-request-cost:
+          schema:
+            type: integer
+          description: Credits this request cost.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    CalendarDay:
+      type: object
+      properties:
+        roomId:
+          type: integer
+        date:
+          type: string
+          format: date
+        numAvail:
+          type: integer
+        price1:
+          type: number
+        minStay:
+          type: integer
+        maxStay:
+          type: integer
+        override:
+          type: string
+    FixedPrice:
+      type: object
+      properties:
+        id:
+          type: integer
+        propertyId:
+          type: integer
+        roomId:
+          type: integer
+        name:
+          type: string
+        firstNight:
+          type: string
+          format: date
+        lastNight:
+          type: string
+          format: date
+        minNights:
+          type: integer
+        maxNights:
+          type: integer
+        roomPrice:
+          type: number
     CalendarWrite:
       type: object
       properties:
@@ -286,41 +353,6 @@ components:
           type: boolean
         numAvail:
           type: integer
-    FixedPrice:
-      type: object
-      properties:
-        id:
-          type: integer
-        propertyId:
-          type: integer
-        roomId:
-          type: integer
-        name:
-          type: string
-        firstNight:
-          type: string
-          format: date
-        lastNight:
-          type: string
-          format: date
-        minNights:
-          type: integer
-        maxNights:
-          type: integer
-        roomPrice:
-          type: number
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        code:
-          type: integer
-          example: 401
-        error:
-          type: string
-          example: Token is missing
     Success:
       type: object
       properties:
@@ -336,50 +368,18 @@ components:
           type: array
           items:
             type: string
-    CalendarDay:
+    Error:
       type: object
       properties:
-        roomId:
+        success:
+          type: boolean
+          example: false
+        code:
           type: integer
-        date:
+          example: 401
+        error:
           type: string
-          format: date
-        numAvail:
-          type: integer
-        price1:
-          type: number
-        minStay:
-          type: integer
-        maxStay:
-          type: integer
-        override:
-          type: string
-  responses:
-    Unauthorized:
-      description: The token is missing, invalid, expired, or lacks the required scope.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.
-      headers:
-        x-five-min-limit-remaining:
-          schema:
-            type: integer
-          description: Credits remaining in the current 5-minute period.
-        x-five-min-limit-resets-in:
-          schema:
-            type: integer
-          description: Seconds until the current period resets.
-        x-request-cost:
-          schema:
-            type: integer
-          description: Credits this request cost.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          example: Token is missing
   securitySchemes:
     tokenAuth:
       type: apiKey
