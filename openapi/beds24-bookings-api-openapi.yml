@@ -136,7 +136,55 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    TooManyRequests:
+      description: The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.
+      headers:
+        x-five-min-limit-remaining:
+          schema:
+            type: integer
+          description: Credits remaining in the current 5-minute period.
+        x-five-min-limit-resets-in:
+          schema:
+            type: integer
+          description: Seconds until the current period resets.
+        x-request-cost:
+          schema:
+            type: integer
+          description: Credits this request cost.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The token is missing, invalid, expired, or lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    InvoiceItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        bookingId:
+          type: integer
+        type:
+          type: string
+          enum:
+          - charge
+          - payment
+        description:
+          type: string
+        qty:
+          type: number
+        amount:
+          type: number
+        vatRate:
+          type: number
+        lineTotal:
+          type: number
     Booking:
       type: object
       properties:
@@ -226,28 +274,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceItem'
-    InvoiceItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        bookingId:
-          type: integer
-        type:
-          type: string
-          enum:
-          - charge
-          - payment
-        description:
-          type: string
-        qty:
-          type: number
-        amount:
-          type: number
-        vatRate:
-          type: number
-        lineTotal:
-          type: number
     Error:
       type: object
       properties:
@@ -260,32 +286,6 @@ components:
         error:
           type: string
           example: Token is missing
-  responses:
-    Unauthorized:
-      description: The token is missing, invalid, expired, or lacks the required scope.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: The account credit limit for the current rolling 5-minute window has been exceeded. Inspect x-five-min-limit-remaining and x-five-min-limit-resets-in.
-      headers:
-        x-five-min-limit-remaining:
-          schema:
-            type: integer
-          description: Credits remaining in the current 5-minute period.
-        x-five-min-limit-resets-in:
-          schema:
-            type: integer
-          description: Seconds until the current period resets.
-        x-request-cost:
-          schema:
-            type: integer
-          description: Credits this request cost.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey

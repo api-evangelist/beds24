@@ -138,13 +138,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: The token is missing, invalid, expired, or lacks the required scope.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Property:
       type: object
@@ -167,46 +160,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Room'
-    Room:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        qty:
-          type: integer
-        maxPeople:
-          type: integer
-        minStay:
-          type: integer
-    Success:
-      type: object
-      properties:
-        success:
-          type: boolean
-        new:
-          type: object
-          additionalProperties: true
-        modified:
-          type: object
-          additionalProperties: true
-        warnings:
-          type: array
-          items:
-            type: string
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        code:
-          type: integer
-          example: 401
-        error:
-          type: string
-          example: Token is missing
     Offer:
       type: object
       properties:
@@ -224,6 +177,53 @@ components:
         departure:
           type: string
           format: date
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+        new:
+          type: object
+          additionalProperties: true
+        modified:
+          type: object
+          additionalProperties: true
+        warnings:
+          type: array
+          items:
+            type: string
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        qty:
+          type: integer
+        maxPeople:
+          type: integer
+        minStay:
+          type: integer
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 401
+        error:
+          type: string
+          example: Token is missing
+  responses:
+    Unauthorized:
+      description: The token is missing, invalid, expired, or lacks the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     tokenAuth:
       type: apiKey

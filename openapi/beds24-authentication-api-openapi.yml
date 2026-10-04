@@ -101,13 +101,15 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Token:
+    TokenSetup:
       type: object
       properties:
         token:
           type: string
         expiresIn:
           type: integer
+        refreshToken:
+          type: string
     AuthenticationDetails:
       type: object
       properties:
@@ -122,15 +124,13 @@ components:
           type: array
           items:
             type: string
-    TokenSetup:
+    Token:
       type: object
       properties:
         token:
           type: string
         expiresIn:
           type: integer
-        refreshToken:
-          type: string
     Success:
       type: object
       properties:
