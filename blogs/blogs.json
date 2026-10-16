@@ -1,0 +1,14 @@
+{
+  "repo": "beds24",
+  "feeds": [
+    {
+      "source": "https://beds24.com/en/company/blog",
+      "feed_url": "https://beds24.com/en/company/blog",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-10-10T13:15:00Z"
+}
